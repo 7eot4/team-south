@@ -19,3 +19,6 @@ dialog{border:0;max-height:94dvh;box-shadow:0 20px 100px #0005;background:white}
 
 /* Match initial gallery pagination before application initialization. */
 .no-js .gallery-card:nth-child(n+7){display:none}
+
+/* WebKit native disclosure hit-testing regresses with deferred sections; retain full rendering there. */
+@supports (content-visibility:auto) and (not (-webkit-nbsp-mode:space)){main>section:not(.hero){content-visibility:auto;contain-intrinsic-block-size:auto 800px}}
