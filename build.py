@@ -2,6 +2,7 @@
 from pathlib import Path
 from html import escape
 import shutil
+import hashlib
 
 ROOT = Path(__file__).parent
 gallery = [
@@ -30,7 +31,11 @@ for number, category, label, caption in gallery:
     cards.append(f'<figure class="gallery-card" data-category="{category}"><a class="gallery-link" href="{large}" aria-label="Powiększ: {escape(caption)}"><img src="{small}" alt="{escape(caption)} — galeria TEAM SOUTH" width="600" height="450" loading="lazy" decoding="async"><span class="gallery-zoom" aria-hidden="true">+</span></a><figcaption><span>{escape(label)}</span><strong>{escape(caption)}</strong></figcaption></figure>')
 template = (ROOT / 'site.html').read_text(encoding='utf-8')
 assert template.count('{{GALLERY}}') == 1
-(ROOT / 'dist/index.html').write_text(template.replace('{{GALLERY}}', '\n'.join(cards)), encoding='utf-8')
+html = template.replace('{{GALLERY}}', '\n'.join(cards))
+for source, target, attribute in [('site.css', 'style.css', 'href'), ('site.js', 'app.js', 'src')]:
+    version = hashlib.sha256((ROOT / source).read_text(encoding='utf-8').encode('utf-8')).hexdigest()[:12]
+    html = html.replace(f'{attribute}="{target}"', f'{attribute}="{target}?v={version}"')
+(ROOT / 'dist/index.html').write_text(html, encoding='utf-8')
 shutil.copyfile(ROOT / 'site.css', ROOT / 'dist/style.css')
 shutil.copyfile(ROOT / 'site.js', ROOT / 'dist/app.js')
 (ROOT / 'dist/team-south.vcf').write_bytes(('BEGIN:VCARD\r\nVERSION:3.0\r\nFN:TEAM SOUTH\r\nN:TEAM SOUTH;;;;\r\nORG:TEAM SOUTH\r\nTEL;TYPE=WORK,VOICE:+48797559814\r\nEMAIL;TYPE=WORK:biuro@teamsouth.pl\r\nADR;TYPE=WORK:;;Niedźwiedź 145;Niedźwiedź;;34-735;Polska\r\nURL:https://teamsouth.pl/\r\nEND:VCARD\r\n').encode('utf-8'))

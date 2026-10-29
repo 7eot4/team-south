@@ -2,6 +2,7 @@
 from pathlib import Path
 from html.parser import HTMLParser
 import re
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).parent / 'dist'
 class Page(HTMLParser):
@@ -22,7 +23,7 @@ assert len(page.ids) == len(set(page.ids)), 'Duplicate HTML IDs'
 assert set(page.anchors) <= set(page.ids), 'Broken anchors'
 for ref in page.refs:
     assert not re.match(r'\w+://', ref), 'Unexpected third-party initial asset: ' + ref
-    assert (ROOT / ref).is_file(), 'Missing local asset: ' + ref
+    assert (ROOT / urlsplit(ref).path).is_file(), 'Missing local asset: ' + ref
 for css in ROOT.rglob('*.css'):
     for ref in re.findall(r'url\([\'"]?([^\)\'\"]+)', css.read_text(encoding='utf-8')):
         assert (css.parent / ref).is_file(), ref

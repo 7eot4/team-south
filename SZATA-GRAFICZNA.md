@@ -15,6 +15,7 @@ Sprawdzono aktualny kod źródłowy oryginalnej strony i jej oryginalne logo. W 
 - Zdjęcia w galerii zachowują naturalne kolory, aby pokazywać rzeczywisty wygląd nawierzchni i zieleni. Sekcja sprzętu otrzymała czarno-białą fotografię dopasowaną do grafitowego tła.
 - Podgląd udostępnianego linku wskazuje oryginalne czarno-białe logo firmy. Kolor interfejsu przeglądarki to grafit marki.
 - Zachowano wszystkie istniejące funkcje, treści oraz oryginalne pliki zdjęć. Nie zmieniono danych firmy ani adresu publikacji.
+- Build dodaje identyfikator zawartości do adresów CSS i JavaScript, aby nowe dokumenty nie korzystały ze starszej wersji tych plików zachowanej w pamięci przeglądarki.
 
 ## Weryfikacja
 
