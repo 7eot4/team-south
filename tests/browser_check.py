@@ -17,11 +17,11 @@ with sync_playwright() as p:
     page.on('response', lambda response: failed.append((response.status, response.url)) if response.status >= 400 else None)
     page.on('request', lambda request: requests.append(request.url))
     page.goto(BASE, wait_until='networkidle')
-    expect(page.locator('h1')).to_contain_text('Przestrzeń dla ludzi.')
+    expect(page.locator('h1')).to_contain_text('Roboty ziemne')
     assert page.locator('.brand img').evaluate('(i)=>i.complete && i.naturalWidth > 0')
     assert not any(urlsplit(url).netloc != urlsplit(BASE).netloc for url in requests), requests
     assert page.locator('iframe').count() == 0
-    for key, title in [('bruk', 'Dobrze ułożona codzienność.'), ('drogi', 'Łączymy miejsca i ludzi.'), ('rekreacja', 'Więcej miejsca na aktywność.'), ('zielen', 'Otoczenie, w którym chce się być.'), ('ziemne', 'Zaczynamy od solidnej podstawy.')]:
+    for key, title in [('bruk', 'Podjazdy, chodniki i nawierzchnie'), ('drogi', 'Drogi i ciągi komunikacyjne'), ('rekreacja', 'Place zabaw i tereny rekreacyjne'), ('zielen', 'Parki, ogrody i otoczenie budynków'), ('ziemne', 'Wykopy i niwelacja terenu')]:
         page.locator(f'[data-service="{key}"]').click()
         expect(page.locator('#service-title')).to_have_text(title)
         expect(page.locator('.choose-service')).to_have_attribute('data-select-service', key)
@@ -77,6 +77,9 @@ with sync_playwright() as p:
     mail = urlsplit(page.locator('#mail-inquiry').get_attribute('href'))
     assert mail.scheme == 'mailto' and mail.path == 'biuro@teamsouth.pl'
     assert parse_qs(mail.query)['body'][0] == summary
+    wa = urlsplit(page.locator('#whatsapp-inquiry').get_attribute('href'))
+    assert wa.scheme == 'https' and wa.netloc == 'wa.me' and wa.path == '/48797559814'
+    assert parse_qs(wa.query)['text'][0] == summary
     page.locator('#copy-inquiry').click()
     expect(page.locator('#form-status')).to_have_text('Skopiowano.')
     assert page.evaluate('navigator.clipboard.readText()').replace('\r\n', '\n') == summary
@@ -96,6 +99,7 @@ with sync_playwright() as p:
     page.locator('#description').fill('ą' * 800)
     page.locator('#form-next').click()
     expect(page.locator('#mail-inquiry')).to_be_hidden()
+    expect(page.locator('#whatsapp-inquiry')).to_be_hidden()
     expect(page.locator('#long-message-note')).to_be_visible()
     page.locator('#form-reset').click()
     expect(page.locator('#inquiry-service')).to_have_value('')
@@ -134,17 +138,30 @@ with sync_playwright() as p:
     page.keyboard.press('Escape')
     expect(page.locator('#privacy-dialog')).to_be_hidden()
     for network in ['Facebook', 'Instagram', 'LinkedIn']:
-        icon = page.locator(f'[data-social="{network}"]')
-        assert icon.evaluate('(button)=>button.tagName') == 'BUTTON'
-        icon.click()
-        expect(page.locator('#social-dialog')).to_be_visible()
-        expect(page.locator('#social-dialog-title')).to_have_text(network)
-        expect(page.locator('#social-dialog')).to_contain_text('Profil nie jest jeszcze podłączony.')
-        assert page.locator('#social-dialog a[href^="https://"]').count() == 0
-        page.locator('#social-dialog').screenshot(path=str(ARTIFACTS / f'social-{network.lower()}.png'))
-        page.keyboard.press('Escape')
-        expect(page.locator('#social-dialog')).to_be_hidden()
-        expect(icon).to_be_focused()
+        for group in ['.header-socials', '.footer-socials']:
+            icon = page.locator(f'{group} [data-social="{network}"]')
+            assert icon.evaluate('(button)=>button.tagName') == 'BUTTON'
+            icon.click()
+            expect(page.locator('#social-dialog')).to_be_visible()
+            expect(page.locator('#social-dialog-title')).to_have_text(network)
+            expect(page.locator('#social-dialog')).to_contain_text('Profil nie jest jeszcze podłączony.')
+            assert page.locator('#social-dialog a[href^="https://"]').count() == 0
+            page.locator('#social-dialog').screenshot(path=str(ARTIFACTS / f'social-{network.lower()}.png'))
+            page.keyboard.press('Escape')
+            expect(page.locator('#social-dialog')).to_be_hidden()
+            expect(icon).to_be_focused()
+    for link in page.locator('.whatsapp-link').all():
+        destination = urlsplit(link.get_attribute('href'))
+        assert destination.netloc == 'wa.me' and destination.path == '/48797559814'
+        assert 'Dzień dobry' in parse_qs(destination.query)['text'][0]
+        assert 'Zakres prac:' in parse_qs(destination.query)['text'][0]
+    context.route('https://wa.me/**', lambda route: route.fulfill(status=200, content_type='text/html', body='<html><body>Test przekazania do WhatsApp</body></html>'))
+    with page.expect_popup() as popup_info: page.locator('.header-socials .whatsapp-link').click()
+    popup = popup_info.value
+    popup.wait_for_load_state('domcontentloaded')
+    assert urlsplit(popup.url).netloc == 'wa.me'
+    assert 'TEAM SOUTH' in parse_qs(urlsplit(popup.url).query)['text'][0]
+    popup.close()
     with page.expect_download() as vcard_info: page.get_by_role('link', name='Zapisz kontakt').click()
     vcard = Path(vcard_info.value.path()).read_text(encoding='utf-8')
     assert all(item in vcard for item in ['FN:TEAM SOUTH', '+48797559814', 'biuro@teamsouth.pl'])
@@ -155,6 +172,15 @@ with sync_playwright() as p:
         page.set_viewport_size({'width': width, 'height': 900})
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f'overflow at {width}'
         if width < 801:
+            for icon in page.locator('.header-socials .social-button').all():
+                expect(icon).to_be_visible()
+                box = icon.bounding_box()
+                assert 0 <= box['x'] and box['x'] + box['width'] <= width
+            mobile_icon = page.locator('.header-socials [data-social="Facebook"]')
+            mobile_icon.click()
+            expect(page.locator('#social-dialog')).to_be_visible()
+            page.keyboard.press('Escape')
+            expect(mobile_icon).to_be_focused()
             page.locator('.menu').click()
             expect(page.locator('.menu')).to_have_attribute('aria-expanded', 'true')
             page.locator('#navigation').get_by_role('link', name='Oferta', exact=True).click()
@@ -166,7 +192,7 @@ with sync_playwright() as p:
     page.locator('#poczatek').scroll_into_view_if_needed()
     page.locator('.hero').screenshot(path=str(ARTIFACTS / 'desktop-hero.png'))
     page.locator('#oferta').screenshot(path=str(ARTIFACTS / 'desktop-services.png'))
-    page.locator('.social-strip').screenshot(path=str(ARTIFACTS / 'social-icons.png'))
+    page.locator('.site-header').screenshot(path=str(ARTIFACTS / 'social-icons.png'))
     page.evaluate("scrollTo({top:0,behavior:'instant'})")
     page.screenshot(path=str(ARTIFACTS / 'desktop.png'), full_page=True)
     page.set_viewport_size({'width': 390, 'height': 844})

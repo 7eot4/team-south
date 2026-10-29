@@ -1,5 +1,7 @@
 # TEAM SOUTH — korekta szaty graficznej
 
+Ten dokument opisuje poprzedni etap. Aktualny układ i kanały kontaktu: `UKLAD-I-KONTAKT.md`. Paleta bieli, czerni i grafitu pozostaje w użyciu.
+
 29.10.2026. Zmiana zgodna z dyspozycją zachowania kolorystyki wcześniejszej strony https://teamsouth.pl/.
 
 ## Punkty odniesienia

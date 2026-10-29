@@ -4,7 +4,7 @@ Autorska wersja poglądowa przebudowy https://teamsouth.pl/.
 
 Aktualna analiza strony, obecności w sieci i zakres wdrożenia: `AUDYT-V2.md`.
 
-Aktualna oprawa wizualna: `SZATA-GRAFICZNA.md` — biel, grafit `#231f20` i szarości na podstawie oryginalnej strony; zastępuje wcześniejszą zieloną koncepcję.
+Aktualny układ i kontakt: `UKLAD-I-KONTAKT.md` — kompozycja oparta na zdjęciach, zwarte usługi, ikony w nawigacji i WhatsApp z gotową wiadomością. Biel, grafit `#231f20` i szarości zachowują kierunek oryginalnej strony. `SZATA-GRAFICZNA.md` opisuje poprzedni etap doboru palety.
 
 Budowanie: `python build.py`. Kontrola plików: `python verify.py` oraz `node --check dist/app.js`.
 
@@ -18,7 +18,7 @@ Adres publikacji: https://7eot4.github.io/team-south/
 
 Opcjonalne odtworzenie zoptymalizowanych zasobów: `python build_assets.py` (wymaga Pillow i dostępu do źródeł). Hosting i zwykły build nie pobierają materiałów z sieci ani nie wymagają Pillow. Fonty zawierają licencje OFL.
 
-Ikony Facebook/Instagram/LinkedIn są lokalnymi grafikami Bootstrap Icons z licencją MIT. Przyciski `data-social` otwierają informację o niepodłączonym profilu i alternatywnym kontakcie. Celowo nie mają fikcyjnych odnośników; podłączenie profili wymaga ich rzeczywistych, potwierdzonych adresów.
+Ikony Facebook/Instagram/LinkedIn/WhatsApp są lokalnymi grafikami Bootstrap Icons z licencją MIT. Facebook/Instagram/LinkedIn (`data-social`) otwierają informację o niepodłączonym profilu; nagłówek i stopka korzystają z tej samej obsługi. WhatsApp jest odnośnikiem `wa.me` z numerem firmy i wiadomością początkową generowanym przez `build.py`. Kreator tworzy odnośnik z podsumowaniem w `site.js`. Nie wysyła automatycznie wiadomości; wymaga aktywnego konta odbiorcy na numerze firmy.
 
 Kontrola przeglądarkowa: `python tests/browser_check.py http://127.0.0.1:8178/` (Playwright i zainstalowany Edge; `python -m pip install playwright`). Ten sam skrypt obsługuje publiczny URL. Artefakty QA są zapisywane w ignorowanym `.local/qa-v2`.
 

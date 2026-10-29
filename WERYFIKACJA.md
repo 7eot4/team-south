@@ -1,5 +1,13 @@
 # Weryfikacja — 29.10.2026
 
+## Aktualny układ, nawigacja i WhatsApp
+
+Opis zmian: `UKLAD-I-KONTAKT.md`. `python build.py`, `python verify.py`, `node --check dist/app.js`: PASS. Bieżąca strona zawiera 65 unikalnych identyfikatorów i 57 odwołań do lokalnych zasobów.
+
+Rozszerzony test przeglądarkowy sprawdza ikony Facebook/Instagram/LinkedIn w nagłówku i stopce, ich okna i powrót fokusu; widoczność czterech ikon nagłówka przy szerokościach mobilnych; adres WhatsApp w każdym miejscu; numer w formacie międzynarodowym i polską wiadomość początkową; zgodność treści WhatsApp z podsumowaniem formularza; obsługę długiego opisu. Otwarcie nowej karty jest testowane z kontrolowaną odpowiedzią zastępującą serwis WhatsApp. Nie wysłano wiadomości i nie potwierdzono aktywnego konta na numerze odbiorcy ani działania konkretnej aplikacji na telefonie.
+
+Wszystkie wcześniejsze ścieżki galerii, zapytania, walidacji, TXT, schowka, vCard, FAQ, mapy na żądanie i wariantu bez JavaScript pozostają objęte testami. Układ sprawdzono przy 1440/1024/768/540/390/320 px i oceniono zrzuty całej strony, nagłówka, usług, galerii oraz kontaktu. Artefakty: `.local/layout-v3/`, `.local/qa-v2/`. Publikacja i zgodność plików są kontrolowane po push na https://7eot4.github.io/team-south/ .
+
 ## Rozbudowa interaktywna v2
 
 - `python build.py`, `python verify.py`, `node --check dist/app.js`: PASS.

@@ -15,11 +15,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu();
 matchMedia('(min-width: 801px)').addEventListener('change', closeMenu);
 
 const services = {
-  ziemne: { kicker: 'PRZYGOTOWANIE INWESTYCJI', title: 'Zaczynamy od solidnej podstawy.', description: 'Wykopy, niwelacja i przygotowanie terenu. Ustalmy warunki na działce oraz zakres prac ziemnych.', items: ['Wykopy i przygotowanie gruntu', 'Wyrównanie i niwelacja terenu', 'Prace z użyciem koparek i minikoparek'], tip: 'Przygotuj lokalizację, orientacyjne wymiary oraz informacje o dojeździe do działki.', image: '07', alt: 'Minikoparka podczas prac terenowych' },
-  bruk: { kicker: 'NAWIERZCHNIE', title: 'Dobrze ułożona codzienność.', description: 'Podjazdy, chodniki i otoczenie budynków. Nawierzchnie z kostki brukowej, płyt betonowych i innych materiałów.', items: ['Podjazdy i ciągi piesze', 'Kostka brukowa i płyty betonowe', 'Nawierzchnie przy obiektach przemysłowych'], tip: 'Podaj przybliżoną powierzchnię, rodzaj istniejącego podłoża i planowane przeznaczenie nawierzchni.', image: '08', alt: 'Gotowa nawierzchnia z kostki brukowej' },
-  drogi: { kicker: 'INFRASTRUKTURA DROGOWA', title: 'Łączymy miejsca i ludzi.', description: 'Drogi, chodniki i ścieżki rowerowe. Zakres prac i organizację realizacji dopasowujemy do konkretnej inwestycji.', items: ['Budowa chodników', 'Ścieżki rowerowe', 'Nawierzchnie dróg i ciągów komunikacyjnych'], tip: 'Przygotuj lokalizację, długość i szerokość odcinka oraz informację o dostępnej dokumentacji.', image: '01', alt: 'Chodnik wzdłuż drogi — galeria firmy' },
-  rekreacja: { kicker: 'PLACE ZABAW I REKREACJA', title: 'Więcej miejsca na aktywność.', description: 'Przestrzenie dla lokalnych społeczności. Budowa placów zabaw i zagospodarowanie terenów rekreacyjnych.', items: ['Place zabaw', 'Otoczenie obiektów sportowych', 'Nawierzchnie i przestrzenie rekreacyjne'], tip: 'Opisz przeznaczenie terenu, jego powierzchnię i zakres projektu. Przekaż dokumentację, jeśli jest dostępna.', image: '26', alt: 'Kolorowa przestrzeń rekreacyjna — galeria firmy' },
-  zielen: { kicker: 'PARKI I TERENY ZIELONE', title: 'Otoczenie, w którym chce się być.', description: 'Parki, ogrody i zielone otoczenie inwestycji. Łączymy przygotowanie terenu z jego zagospodarowaniem.', items: ['Zagospodarowanie terenów zielonych', 'Przestrzenie parkowe', 'Otoczenie inwestycji prywatnych i publicznych'], tip: 'Przygotuj zdjęcia, orientacyjną powierzchnię i opis planowanych zmian. Zaznacz, które elementy mają pozostać.', image: '09', alt: 'Zagospodarowany ogród z zielenią i ścieżkami' }
+  ziemne: { kicker: 'ROBOTY ZIEMNE', title: 'Wykopy i niwelacja terenu', description: 'Przygotowanie działki pod inwestycję oraz prace ziemne z użyciem koparek i minikoparek.', items: ['Wykopy i przygotowanie gruntu', 'Wyrównanie i niwelacja terenu', 'Prace z użyciem koparek i minikoparek'], tip: 'Przygotuj lokalizację, orientacyjne wymiary oraz informacje o dojeździe do działki.', image: '07', alt: 'Minikoparka podczas prac terenowych' },
+  bruk: { kicker: 'BRUKARSTWO', title: 'Podjazdy, chodniki i nawierzchnie', description: 'Nawierzchnie z kostki brukowej, płyt betonowych i innych materiałów przy domach i obiektach przemysłowych.', items: ['Podjazdy i ciągi piesze', 'Kostka brukowa i płyty betonowe', 'Nawierzchnie przy obiektach przemysłowych'], tip: 'Podaj przybliżoną powierzchnię, rodzaj istniejącego podłoża i planowane przeznaczenie nawierzchni.', image: '08', alt: 'Gotowa nawierzchnia z kostki brukowej' },
+  drogi: { kicker: 'INFRASTRUKTURA DROGOWA', title: 'Drogi i ciągi komunikacyjne', description: 'Budowa dróg, chodników i ścieżek rowerowych. Zakres i organizację prac ustalamy dla konkretnej inwestycji.', items: ['Budowa chodników', 'Ścieżki rowerowe', 'Nawierzchnie dróg i ciągów komunikacyjnych'], tip: 'Przygotuj lokalizację, długość i szerokość odcinka oraz informację o dostępnej dokumentacji.', image: '01', alt: 'Chodnik wzdłuż drogi — galeria firmy' },
+  rekreacja: { kicker: 'REKREACJA', title: 'Place zabaw i tereny rekreacyjne', description: 'Budowa placów zabaw i zagospodarowanie przestrzeni przy obiektach sportowych oraz rekreacyjnych.', items: ['Place zabaw', 'Otoczenie obiektów sportowych', 'Nawierzchnie i przestrzenie rekreacyjne'], tip: 'Opisz przeznaczenie terenu, jego powierzchnię i zakres projektu. Przekaż dokumentację, jeśli jest dostępna.', image: '26', alt: 'Kolorowa przestrzeń rekreacyjna — galeria firmy' },
+  zielen: { kicker: 'TERENY ZIELONE', title: 'Parki, ogrody i otoczenie budynków', description: 'Przygotowanie i zagospodarowanie terenu przy inwestycjach prywatnych oraz publicznych.', items: ['Zagospodarowanie terenów zielonych', 'Przestrzenie parkowe', 'Otoczenie inwestycji prywatnych i publicznych'], tip: 'Przygotuj zdjęcia, orientacyjną powierzchnię i opis planowanych zmian. Zaznacz, które elementy mają pozostać.', image: '09', alt: 'Zagospodarowany ogród z zielenią i ścieżkami' }
 };
 $$('[data-service]').forEach(button => button.addEventListener('click', () => {
   const key = button.dataset.service, service = services[key];
@@ -87,7 +87,7 @@ function setStep(next, focus = true) {
   steps.forEach((step, index) => { step.hidden = index !== next; step.disabled = index !== next; });
   $$('.form-progress li').forEach((item, index) => { if (index === next) item.setAttribute('aria-current', 'step'); else item.removeAttribute('aria-current'); });
   $('#form-back').hidden = next === 0; $('#form-next').hidden = next === 2;
-  $('#long-message-note').hidden = next !== 2 || !$('#mail-inquiry').hidden;
+  $('#long-message-note').hidden = next !== 2 || !$('#mail-inquiry').hidden || !$('#whatsapp-inquiry').hidden;
   $('#form-next').textContent = next === 1 ? 'Przygotuj treść →' : 'Dalej →';
   $('#form-status').textContent = '';
   if (focus) {
@@ -102,7 +102,10 @@ function generateSummary() {
   const href = `mailto:biuro@teamsouth.pl?subject=${encodeURIComponent('Zapytanie — ' + service)}&body=${encodeURIComponent(text)}`;
   $('#mail-inquiry').href = href;
   $('#mail-inquiry').hidden = href.length > 1900;
-  $('#long-message-note').hidden = href.length <= 1900;
+  const whatsappHref = `https://wa.me/48797559814?text=${encodeURIComponent(text)}`;
+  $('#whatsapp-inquiry').href = whatsappHref;
+  $('#whatsapp-inquiry').hidden = whatsappHref.length > 1900;
+  $('#long-message-note').hidden = !$('#mail-inquiry').hidden || !$('#whatsapp-inquiry').hidden;
   return text;
 }
 form.addEventListener('submit', e => {
@@ -118,7 +121,7 @@ $('#location').addEventListener('input', () => $('#location').setCustomValidity(
 $('#form-back').addEventListener('click', () => setStep(Math.max(0, formStep - 1)));
 $('#form-reset').addEventListener('click', () => {
   form.reset(); $('#location').setCustomValidity(''); $('#inquiry-summary').textContent = '';
-  $('#mail-inquiry').href = 'mailto:biuro@teamsouth.pl'; $('#description-count').textContent = '0 / 800'; setStep(0);
+  $('#mail-inquiry').href = 'mailto:biuro@teamsouth.pl'; $('#whatsapp-inquiry').href = $('.whatsapp-link').href; $('#description-count').textContent = '0 / 800'; setStep(0);
 });
 $('#description').addEventListener('input', () => { $('#description-count').textContent = `${$('#description').value.length} / 800`; });
 $('.choose-service').addEventListener('click', e => { $('#inquiry-service').value = e.currentTarget.dataset.selectService; setStep(0, false); });
@@ -182,20 +185,13 @@ privacy.addEventListener('close', () => document.body.classList.remove('modal-op
 
 const socialDialog = $('#social-dialog');
 $$('[data-social]').forEach(button => button.addEventListener('click', () => {
+  closeMenu();
   $('#social-dialog-title').textContent = button.dataset.social;
   socialDialog.showModal(); document.body.classList.add('modal-open');
 }));
 $('#close-social').addEventListener('click', () => socialDialog.close());
 socialDialog.addEventListener('close', () => document.body.classList.remove('modal-open'));
 
-let scrollQueued = false;
-function updateProgress() {
-  const distance = document.documentElement.scrollHeight - innerHeight;
-  $('.scroll-progress').style.width = `${distance > 0 ? Math.min(100, scrollY / distance * 100) : 0}%`;
-  scrollQueued = false;
-}
-document.addEventListener('scroll', () => { if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateProgress); } }, { passive: true });
-updateProgress();
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {
     const section = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
