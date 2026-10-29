@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:TEAM SOUTH
+ORG:TEAM SOUTH
+TEL;TYPE=WORK,VOICE:+48797559814
+EMAIL;TYPE=WORK:biuro@teamsouth.pl
+ADR;TYPE=WORK:;;Niedźwiedź 145;Niedźwiedź;;34-735;Polska
+URL:https://teamsouth.pl/
+END:VCARD

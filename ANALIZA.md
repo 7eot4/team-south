@@ -1,5 +1,7 @@
 # TEAM SOUTH — analiza i koncepcja przebudowy
 
+Archiwalna analiza pierwszej wersji. Aktualny audyt, ustalenia o social mediach i zakres rozbudowy znajdują się w `AUDYT-V2.md`.
+
 Stan źródła: 29.10.2026. Źródło: https://teamsouth.pl/.
 
 ## Wnioski

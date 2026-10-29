@@ -1,17 +1,21 @@
-# CODEX-17-team-south
+# TEAM SOUTH
 
 Autorska wersja poglądowa przebudowy https://teamsouth.pl/.
 
-Strona: `dist/index.html`. Analiza: `ANALIZA.md`.
+Aktualna analiza strony, obecności w sieci i zakres wdrożenia: `AUDYT-V2.md`.
 
-Uruchomienie: `python -m http.server 8177 --bind 127.0.0.1 --directory dist`.
+Budowanie: `python build.py`. Kontrola plików: `python verify.py` oraz `node --check dist/app.js`.
 
-Podgląd: http://127.0.0.1:8177/.
+Podgląd: `python -m http.server 8178 --bind 127.0.0.1 --directory dist`, następnie http://127.0.0.1:8178/.
 
-Publikacja w `.github/workflows/pages.yml`: katalog `dist`, gałąź `main`, GitHub Pages przez GitHub Actions. Objęta stałą zgodą użytkownika z 29.10.2026. Repozytorium: `7eot4/CODEX-17-team-south`.
+Publikacja w `.github/workflows/pages.yml`: zbudowanie i weryfikacja strony, katalog `dist`, gałąź `main`, GitHub Pages przez GitHub Actions. Repozytorium: `7eot4/team-south`.
 
-Adres publikacji: https://7eot4.github.io/CODEX-17-team-south/
+Adres publikacji: https://7eot4.github.io/team-south/
 
-Nie zmienia oryginalnej domeny. Telefon i poczta otwierają aplikacje użytkownika. Kopiowanie e-mail działa w bezpiecznym kontekście lub pokazuje adres do ręcznego skopiowania. Brak zbierania danych i udawanej wysyłki formularza.
+Źródła strony: `site.html`, `site.css`, `site.js`; katalog galerii w `build.py`. Nie edytuj ręcznie wygenerowanych `dist/index.html`, `dist/style.css` ani `dist/app.js`. Zasoby zdjęć i logo są w `dist/assets`, a ich pochodzenie w `dist/assets/sources.json`.
 
-Źródła grafik pobiera `prepare.py`; skrypt nie jest potrzebny do uruchomienia ani wdrożenia. Ograniczenia i pochodzenie materiałów opisano w analizie.
+Opcjonalne odtworzenie zoptymalizowanych zasobów: `python build_assets.py` (wymaga Pillow i dostępu do źródeł). Hosting i zwykły build nie pobierają materiałów z sieci ani nie wymagają Pillow. Fonty zawierają licencje OFL.
+
+Kontrola przeglądarkowa: `python tests/browser_check.py http://127.0.0.1:8178/` (Playwright i zainstalowany Edge; `python -m pip install playwright`). Ten sam skrypt obsługuje publiczny URL. Artefakty QA są zapisywane w ignorowanym `.local/qa-v2`.
+
+Kreator nie zapisuje i nie wysyła danych. Generuje treść, link do poczty, plik TXT lub zawartość schowka. Długi tekst ma alternatywę kopiowania/pobrania. Mapa Google ładuje się dopiero po kliknięciu. Brak analityki i zewnętrznych fontów. Nie zmienia oryginalnej domeny.

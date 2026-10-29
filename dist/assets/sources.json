@@ -1,0 +1,103 @@
+{
+  "company": "https://teamsouth.pl/",
+  "gallery": [
+    {
+      "id": 1,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1200_e95hu5_img_57db2785e3ad618bc8fd3906bba4e4bf.jpg",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "id": 2,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1200_e95hu5_img_a28fabb94460c5855a1214ff060c2093.jpeg",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "id": 5,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1600_e95hu5_img_542cb9bc95593b1ea1062276d95e44fa.jpg",
+      "width": 1600,
+      "height": 2133
+    },
+    {
+      "id": 7,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1600_e95hu5_img_8c752fb255cfba3f2f1f0e6c8f4643a2.jpeg",
+      "width": 1600,
+      "height": 1200
+    },
+    {
+      "id": 8,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1600_e95hu5_img_f2e57b3bc404101bdee638b8a1cd43a6.jpg",
+      "width": 1600,
+      "height": 2133
+    },
+    {
+      "id": 9,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_1436de70adb279ee66463986f5edc82d.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 10,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_2702acfa39b3036119b92839c6f566a4.jpg",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "id": 13,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_4b1dc8974a9b08f783419f41effbf035.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 15,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_4ecd18489f46eac38a6359ed89053b9f.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 16,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_531a4eac3cea1d2c4c81a4581df44599.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 18,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_5bdb301e342607d02f6f0564f468b58f.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 19,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_5dc14ea5a586757b4d5372939315c1ac.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 23,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_882dda668327f0ed369483352bcff7bf.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 24,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_8ee37a882eef42b7433dfa12247c50e5.jpeg",
+      "width": 1920,
+      "height": 1280
+    },
+    {
+      "id": 26,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_a652cf0da952007b30dff0842951d09c.jpg",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "id": 30,
+      "source": "https://teamsouth.pl/_/images/.CURRENT_LIB/1920_e95hu5_img_bf2bf59eff9d8f627d9fad0bf720e0f2.jpeg",
+      "width": 1920,
+      "height": 1280
+    }
+  ],
+  "logo": "https://teamsouth.pl/_/images/pl/webpage_1/lysc2ncz/element_697/logo_main_page.png",
+  "note": "Company gallery; no verified association between individual photographs and named projects."
+}
