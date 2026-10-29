@@ -48,6 +48,23 @@ Trzy świeże konteksty na profil, viewport 390×844, wyłączona pamięć podr�
 
 Nie zarejestrowano zadania blokującego ponad 300 ms w badanym okresie początkowego ładowania. W profilu zwykłym największe zmierzone zadanie miało 77 ms. Pomiary LCP i transferu na adresie publicznym będą wykonane ponownie po publikacji; nie należy porównywać lokalnego czasu wprost z czasem przez internet. Nie mierzono rzeczywistego INP ani płynności GPU na fizycznych telefonach.
 
+## Weryfikacja opublikowanej wersji
+
+Wersja kodu strony: `dba00784c0bfcc2a81bda40b43c54f148f6972da`; [wdro?enie 40963291238](https://github.com/7eot4/team-south/actions/runs/40963291238) zako?czone sukcesem. Pomiary wykonano na publicznym HTTPS, nie na lokalnym serwerze.
+
+Dodatkowo ograniczono koszt pierwszego obliczania uk?adu: galeria ma pocz?tkowy limit zdj?? jeszcze przed uruchomieniem skryptu, a sekcje poza ekranem s? renderowane na ??danie w obs?ugiwanych silnikach. WebKit zachowuje pe?ne renderowanie z powodu odtworzonego problemu trafiania klikni?? w natywne rozwijane odpowiedzi przy odroczonym renderowaniu; ta optymalizacja nie jest tam w??czana. Wersja bez JavaScript nadal pokazuje ca?? galeri?.
+
+Publicznie przesz?y pe?ne testy funkcjonalne, testy bezpiecze?stwa przegl?darki (wstrzykni?cia, blokady CSP, podmiana skryptu, awaria zdj?cia) i 57 uk?ad?w w Edge, Firefox oraz WebKit, z opisanym wy?ej ostrze?eniem silnika WebKit. Por?wnano tre?ci HTML, JS, CSS, CSS font?w, pliku bez JavaScript i vCard ze zbudowanymi plikami; s? zgodne po normalizacji ko?c?w linii. Potwierdzono 16 widocznych zdj?? bez JavaScript, HTTPS 200 i HSTS. Pr?by pobrania `.env`, `.git/config`, `.local/security/headers-before.json`, `site.html` i `tests/browser_check.py` zwr?ci?y 404.
+
+Publiczny pomiar laboratoryjny: Edge, ekran 390 ? 844, po 3 nowe konteksty na profil, pami?? podr?czna wy??czona. Transfer dotyczy zasob?w poza HTML.
+
+| Profil | Mediana LCP | Najwi?kszy CLS | Mediana transferu | Najd?u?sze zadanie |
+|---|---:|---:|---:|---:|
+| Zwyk?y mobilny | 312 ms | 0 | 342 504 B | brak zadania >50 ms |
+| 150 ms op??nienia, 200 000 B/s, CPU ?4 | 1220 ms | 0,00101 | 342 504 B | 265 ms |
+
+To pomiary laboratoryjne na danym komputerze, nie gwarancja czasu u ka?dego odbiorcy ani pomiar rzeczywistych u?ytkownik?w. Wcze?niejsza wersja przekracza?a lokalny limit 300 ms dla pojedynczego zadania przy CPU ?4; po optymalizacji limit zosta? spe?niony bez jego podnoszenia.
+
 ## Ograniczenia hostingu i zakresu
 
 - W sprawdzonej odpowiedzi HTTP nie ma nagłówków CSP, X-Frame-Options, X-Content-Type-Options ani Permissions-Policy. CSP została wdrożona w HTML tam, gdzie jest skuteczna. `frame-ancestors` i X-Frame-Options nie działają przez meta, więc nie deklarujemy ochrony przed osadzeniem strony przez inną witrynę. Pełne sterowanie nagłówkami wymaga obsługi po stronie hostingu lub dodatkowej warstwy serwera; nie zmieniano hostingu, domen ani kont użytkownika.

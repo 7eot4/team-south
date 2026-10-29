@@ -221,6 +221,7 @@ with sync_playwright() as p:
     fallback = nojs.new_page(); fallback.goto(BASE, wait_until='networkidle')
     expect(fallback.locator('.inquiry-form')).to_be_hidden()
     expect(fallback.locator('.gallery-card')).to_have_count(16)
+    expect(fallback.locator('.gallery-card:visible')).to_have_count(16)
     expect(fallback.locator('.phone')).to_be_visible()
     assert fallback.evaluate('document.documentElement.scrollWidth <= innerWidth')
     nojs.close(); context.close(); browser.close()
