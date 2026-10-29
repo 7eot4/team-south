@@ -17,5 +17,5 @@ dialog{border:0;max-height:94dvh;box-shadow:0 20px 100px #0005;background:white}
 .lightbox-feedback{position:absolute;left:55px;right:55px;top:50%;transform:translateY(-50%);padding:15px;text-align:center;color:#666;font-size:11px}.lightbox-feedback p{margin-bottom:13px}.lightbox-feedback button{position:static;transform:none;width:auto;height:auto;min-height:40px;font-size:11px;padding:9px 16px}.script-fallback{display:none}.no-js .script-fallback{display:block;font-size:11px;color:#666;margin-bottom:15px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 
-/* Native options use a system font to avoid costly webfont layout. */
-select,option{font-family:Arial,sans-serif}
+/* Match initial gallery pagination before application initialization. */
+.no-js .gallery-card:nth-child(n+7){display:none}

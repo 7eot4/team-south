@@ -1,1 +1,3 @@
 .no-js .service-tabs,.no-js .gallery-tools,.no-js .inquiry-form,.no-js .measure-tool,.no-js #load-map,.no-js #open-privacy,.no-js .copy,.no-js #share-site,.no-js .script-fallback{display:none!important}.no-js .offer-layout{display:block}.fallback-navigation{display:flex;flex-wrap:wrap;gap:12px 24px;padding:15px 5%;font-size:12px;background:#f5f5f4;border-bottom:1px solid #ddd}.fallback-navigation a{padding:5px 0}
+
+.no-js .gallery-card:nth-child(n+7){display:block}
