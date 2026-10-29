@@ -12,4 +12,8 @@
 
 Wbudowana przeglądarka nie wystartowała z powodu brakującego `browser-service.mjs`; kontrolę wykonano lokalnie przez Playwright i zainstalowany Edge.
 
-Nie sprawdzono publikacji, zdalnego repozytorium ani GitHub Actions: oczekują potwierdzenia użytkownika dla nowego publicznego repozytorium i wdrożenia. Sprawdzenie lokalne nie dowodzi poprawnego wdrożenia.
+Publikacja autoryzowana globalną zgodą użytkownika 29.10.2026. Repozytorium publiczne: `7eot4/CODEX-17-team-south`, gałąź `main`. Pierwsze wdrożenie GitHub Actions zakończone sukcesem: run `40905806937`. Przed publikacją sprawdzono listę śledzonych plików i brak sekretów w publikowanym zakresie. Zdalny commit zgodny z lokalnym.
+
+Adres strony: https://7eot4.github.io/CODEX-17-team-south/
+
+PASS po publikacji: dokument, CSS, JavaScript, favicon i trzy używane zdjęcia odpowiadają plikom lokalnym (dla tekstu porównano treść po normalizacji CRLF/LF). Powtórzono kontrolę w Edge na publicznym URL: szerokości 1440/768/390/320 px, menu mobilne, kopiowanie e-mail, załadowanie obrazów i brak błędów JavaScript — wynik poprawny.
