@@ -4,6 +4,10 @@ Autorska wersja poglądowa przebudowy https://teamsouth.pl/.
 
 Aktualna analiza strony, obecności w sieci i zakres wdrożenia: `AUDYT-V2.md`.
 
+Testy i utwardzenie bezpieczeństwa: `AUDYT-BEZPIECZENSTWA.md`. Bramka statyczna jest uruchamiana przy każdej publikacji. Dodatkowe skrypty w `tests/` obejmują kontrolowane ataki na formularz i CSP, podmianę skryptu, błędy sieciowe, 57 układów w trzech silnikach i powtarzane pomiary laboratoryjne. Ograniczenia hostingu i znana regresja WebKit są opisane w raporcie.
+
+Środowisko testów przeglądarkowych: `python -m pip install -r requirements-dev.txt`, następnie `python -m playwright install firefox webkit`; wymagany zainstalowany Edge. Test trzech silników uruchamiaj pod HTTPS. Wersja Playwright przypięta dla powtarzalności testów; nie jest zależnością strony produkcyjnej.
+
 Aktualny układ i kontakt: `UKLAD-I-KONTAKT.md` — kompozycja oparta na zdjęciach, zwarte usługi, ikony w nawigacji i WhatsApp z gotową wiadomością. Biel, grafit `#231f20` i szarości zachowują kierunek oryginalnej strony. `SZATA-GRAFICZNA.md` opisuje poprzedni etap doboru palety.
 
 Budowanie: `python build.py`. Kontrola plików: `python verify.py` oraz `node --check dist/app.js`.

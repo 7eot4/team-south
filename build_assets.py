@@ -48,7 +48,7 @@ for family, slug, weights in [('Manrope', 'manrope', '400..800'), ('Barlow+Conde
         css_parts.append(rule.replace(source, filename))
         count += 1
     if not count: raise RuntimeError('No Latin font subsets: ' + family)
-(font_dir / 'fonts.css').write_text('\n'.join(css_parts), encoding='utf-8')
+(font_dir / 'fonts.css').write_text('\n'.join(css_parts).replace('font-display: swap', 'font-display: optional'), encoding='utf-8')
 for slug, directory in [('manrope', 'manrope'), ('barlow-condensed', 'barlowcondensed')]:
     license_file = font_dir / f'{slug}-OFL.txt'
     urllib.request.urlretrieve(f'https://raw.githubusercontent.com/google/fonts/main/ofl/{directory}/OFL.txt', license_file)

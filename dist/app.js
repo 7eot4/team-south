@@ -1,7 +1,7 @@
 'use strict';
-document.documentElement.classList.remove('no-js');
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
+const wellFormed = text => typeof text.toWellFormed === 'function' ? text.toWellFormed() : text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDFFF]/g, token => token.length === 2 ? token : '\uFFFD');
 const menu = $('.menu');
 const navigation = $('#navigation');
 function closeMenu() { menu.setAttribute('aria-expanded', 'false'); navigation.classList.remove('open'); }
@@ -29,6 +29,7 @@ $$('[data-service]').forEach(button => button.addEventListener('click', () => {
   $('#service-description').textContent = service.description;
   $('#service-tip').textContent = service.tip;
   $('#service-list').replaceChildren(...service.items.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
+  $('#service-image').srcset = `assets/work-${service.image}-600.webp 600w, assets/work-${service.image}-1400.webp 1400w`;
   $('#service-image').src = `assets/work-${service.image}-1400.webp`;
   $('#service-image').alt = service.alt;
   $('.choose-service').dataset.selectService = key;
@@ -55,10 +56,33 @@ $('#gallery-more').addEventListener('click', () => {
 });
 filterGallery();
 const lightbox = $('#lightbox');
+const lightboxImage = $('#lightbox-image');
+function loadPhoto(url) {
+  lightboxImage.hidden = true;
+  $('#lightbox-feedback').hidden = false;
+  $('#lightbox-status').textContent = 'Ładowanie zdjęcia…';
+  $('#lightbox-retry').hidden = true;
+  lightboxImage.src = url;
+}
+lightboxImage.addEventListener('load', () => {
+  lightboxImage.hidden = false;
+  $('#lightbox-feedback').hidden = true;
+});
+lightboxImage.addEventListener('error', () => {
+  lightboxImage.hidden = true;
+  $('#lightbox-feedback').hidden = false;
+  $('#lightbox-status').textContent = 'Nie udało się wczytać zdjęcia. Spróbuj ponownie lub wybierz inne.';
+  $('#lightbox-retry').hidden = false;
+});
+$('#lightbox-retry').addEventListener('click', () => {
+  const url = new URL(matchingCards()[photoIndex].querySelector('a').href);
+  url.searchParams.set('retry', String(Date.now()));
+  loadPhoto(url.href);
+});
 function showPhoto(index) {
   const cards = matchingCards(); photoIndex = (index + cards.length) % cards.length;
   const card = cards[photoIndex], link = card.querySelector('a'), img = card.querySelector('img');
-  $('#lightbox-image').src = link.href; $('#lightbox-image').alt = img.alt;
+  loadPhoto(link.href); lightboxImage.alt = img.alt;
   $('#lightbox-caption').textContent = card.querySelector('strong').textContent;
   $('#lightbox-count').textContent = `${photoIndex + 1} / ${cards.length}`;
 }
@@ -97,7 +121,7 @@ function setStep(next, focus = true) {
 }
 function generateSummary() {
   const service = $('#inquiry-service').selectedOptions[0].textContent;
-  const text = ['Dzień dobry,', '', 'Proszę o kontakt w sprawie inwestycji:', `Zakres: ${service}`, `Inwestor: ${$('#investor').value}`, `Miejscowość: ${$('#location').value.trim()}`, `Orientacyjny zakres: ${$('#scope').value.trim() || 'do ustalenia'}`, `Planowany termin: ${$('#timing').value}`, `Dokumentacja / zdjęcia: ${$('#documentation').checked ? 'mam do przekazania w wiadomości' : 'do uzgodnienia'}`, '', $('#description').value.trim() ? `Opis:\n${$('#description').value.trim()}` : 'Szczegóły do omówienia podczas rozmowy.', '', 'Proszę o informację o możliwości realizacji i dalszych krokach.'].join('\n');
+  const text = wellFormed(['Dzień dobry,', '', 'Proszę o kontakt w sprawie inwestycji:', `Zakres: ${service}`, `Inwestor: ${$('#investor').value}`, `Miejscowość: ${$('#location').value.trim()}`, `Orientacyjny zakres: ${$('#scope').value.trim() || 'do ustalenia'}`, `Planowany termin: ${$('#timing').value}`, `Dokumentacja / zdjęcia: ${$('#documentation').checked ? 'mam do przekazania w wiadomości' : 'do uzgodnienia'}`, '', $('#description').value.trim() ? `Opis:\n${$('#description').value.trim()}` : 'Szczegóły do omówienia podczas rozmowy.', '', 'Proszę o informację o możliwości realizacji i dalszych krokach.'].join('\n'));
   $('#inquiry-summary').textContent = text;
   const href = `mailto:biuro@teamsouth.pl?subject=${encodeURIComponent('Zapytanie — ' + service)}&body=${encodeURIComponent(text)}`;
   $('#mail-inquiry').href = href;
@@ -112,15 +136,20 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   if (formStep === 2) return;
   if (formStep === 1) $('#location').setCustomValidity($('#location').value.trim().length < 2 ? 'Podaj miejscowość (co najmniej 2 znaki).' : '');
+  steps[formStep].querySelectorAll('[maxlength]').forEach(field => {
+    if (field.value.length > field.maxLength) field.setCustomValidity(`Maksymalnie ${field.maxLength} znaków.`);
+  });
   const invalid = [...steps[formStep].querySelectorAll('input, select, textarea')].find(field => !field.checkValidity());
   if (invalid) { invalid.reportValidity(); return; }
   if (formStep === 1) generateSummary();
   setStep(formStep + 1);
 });
 $('#location').addEventListener('input', () => $('#location').setCustomValidity(''));
+form.querySelectorAll('[maxlength]').forEach(field => field.addEventListener('input', () => field.setCustomValidity('')));
 $('#form-back').addEventListener('click', () => setStep(Math.max(0, formStep - 1)));
 $('#form-reset').addEventListener('click', () => {
   form.reset(); $('#location').setCustomValidity(''); $('#inquiry-summary').textContent = '';
+  form.querySelectorAll('[maxlength]').forEach(field => field.setCustomValidity(''));
   $('#mail-inquiry').href = 'mailto:biuro@teamsouth.pl'; $('#whatsapp-inquiry').href = $('.whatsapp-link').href; $('#description-count').textContent = '0 / 800'; setStep(0);
 });
 $('#description').addEventListener('input', () => { $('#description-count').textContent = `${$('#description').value.length} / 800`; });
@@ -200,3 +229,5 @@ if ('IntersectionObserver' in window) {
   }, { rootMargin: '-15% 0px -55% 0px', threshold: 0 });
   $$('main>section[id]').forEach(section => observer.observe(section));
 }
+// Reveal script-dependent controls only after the application has initialized.
+document.documentElement.classList.remove('no-js');

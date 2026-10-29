@@ -1,9 +1,9 @@
 """Render the static site from a single HTML template and an explicit gallery catalogue."""
 from pathlib import Path
 from html import escape
-import shutil
 import hashlib
 import json
+import base64
 from urllib.parse import quote
 
 ROOT = Path(__file__).parent
@@ -41,11 +41,22 @@ html = template.replace('{{GALLERY}}', '\n'.join(cards))
 whatsapp_message = 'Dzień dobry, chciałbym zapytać o ofertę TEAM SOUTH.\n\nZakres prac: \nMiejscowość: \nPlanowany termin: '
 whatsapp_url = 'https://wa.me/48797559814?text=' + quote(whatsapp_message, safe='')
 html = html.replace('{{WHATSAPP_URL}}', escape(whatsapp_url, quote=True))
+integrities = {}
 for source, target, attribute in [('site.css', 'style.css', 'href'), ('site.js', 'app.js', 'src')]:
-    version = hashlib.sha256((ROOT / source).read_text(encoding='utf-8').encode('utf-8')).hexdigest()[:12]
-    html = html.replace(f'{attribute}="{target}"', f'{attribute}="{target}?v={version}"')
+    content = (ROOT / source).read_text(encoding='utf-8').encode('utf-8')
+    version = hashlib.sha256(content).hexdigest()[:12]
+    integrity = 'sha384-' + base64.b64encode(hashlib.sha384(content).digest()).decode('ascii')
+    integrities[target] = integrity
+    html = html.replace(f'{attribute}="{target}"', f'{attribute}="{target}?v={version}" integrity="{integrity}" crossorigin="anonymous"')
+    (ROOT / 'dist' / target).write_bytes(content)
+font_css = ROOT / 'dist/assets/fonts/fonts.css'
+font_content = font_css.read_text(encoding='utf-8').encode('utf-8')
+font_css.write_bytes(font_content)
+font_integrity = 'sha384-' + base64.b64encode(hashlib.sha384(font_content).digest()).decode('ascii')
+font_version = hashlib.sha256(font_content).hexdigest()[:12]
+html = html.replace('href="assets/fonts/fonts.css"', f'href="assets/fonts/fonts.css?v={font_version}" integrity="{font_integrity}" crossorigin="anonymous"')
+csp = f"default-src 'none'; script-src '{integrities['app.js']}'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src https://www.google.com https://maps.google.com; worker-src 'none'; upgrade-insecure-requests"
+html = html.replace('{{CSP}}', csp)
 (ROOT / 'dist/index.html').write_text(html, encoding='utf-8')
-shutil.copyfile(ROOT / 'site.css', ROOT / 'dist/style.css')
-shutil.copyfile(ROOT / 'site.js', ROOT / 'dist/app.js')
 (ROOT / 'dist/team-south.vcf').write_bytes(('BEGIN:VCARD\r\nVERSION:3.0\r\nFN:TEAM SOUTH\r\nN:TEAM SOUTH;;;;\r\nORG:TEAM SOUTH\r\nTEL;TYPE=WORK,VOICE:+48797559814\r\nEMAIL;TYPE=WORK:biuro@teamsouth.pl\r\nADR;TYPE=WORK:;;Niedźwiedź 145;Niedźwiedź;;34-735;Polska\r\nURL:https://teamsouth.pl/\r\nEND:VCARD\r\n').encode('utf-8'))
 print(f'Built static site with {len(gallery)} gallery photographs.')

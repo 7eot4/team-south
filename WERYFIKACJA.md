@@ -1,5 +1,9 @@
 # Weryfikacja — 29.10.2026
 
+## Bezpieczeństwo, stabilność i wydajność
+
+Aktualny raport: `AUDYT-BEZPIECZENSTWA.md`. Dodano egzekwowaną CSP z hashem skryptu, SRI, blokadę natywnej wysyłki formularza, bezpieczny start aplikacji i obsługę błędu zdjęcia. Poprawiono przesunięcie mobilnego nagłówka i dobór rozdzielczości zdjęć. Testy: statyczna bramka bezpieczeństwa w CI, korpus danych XSS/URI/Unicode, aktywne blokady CSP, podmiana skryptu, błąd sieciowy, 57 kombinacji układu i trzy silniki. WebKit ma jawnie zakwalifikowane trzy ostrzeżenia regresji natywnych pól select; szczegóły i źródło w raporcie. Pomiary laboratoryjne są odróżnione od danych realnych użytkowników. Poniżej zapis wcześniejszych etapów.
+
 ## Aktualny układ, nawigacja i WhatsApp
 
 Opis zmian: `UKLAD-I-KONTAKT.md`. `python build.py`, `python verify.py`, `node --check dist/app.js`: PASS. Bieżąca strona zawiera 65 unikalnych identyfikatorów i 57 odwołań do lokalnych zasobów.

@@ -1,0 +1,2 @@
+# Browser QA only. The ordinary static build has no Python package dependencies.
+playwright==1.64.1
