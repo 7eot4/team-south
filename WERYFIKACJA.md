@@ -17,6 +17,8 @@ Wbudowana przeglądarka nadal nie uruchamia się z powodu brakującego modułu d
 
 Aktualny adres: https://7eot4.github.io/team-south/ . Wynik publikacji i zgodność zdalnego commitu sprawdzane są po push; poniżej zachowano historyczny zapis pierwszej wersji.
 
+Wdrożenie v2: GitHub Actions `40910131087`, commit `842f105203430123fe5890ae2019a808157f3d2c`, wynik `success`. Pełny skrypt `tests/browser_check.py` wykonano także na publicznym URL. Końcowa korekta dodaje wymagane pole `N` wizytówki vCard 3.0; treść danych firmy pozostaje bez zmian. Dla tej korekty ponownie sprawdzany jest plik kontaktu, zgodność publicznych zasobów oraz wynik wdrożenia.
+
 ## Pierwsza wersja — zapis historyczny
 
 - PASS: `node --check dist/app.js`.

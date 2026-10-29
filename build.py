@@ -33,5 +33,5 @@ assert template.count('{{GALLERY}}') == 1
 (ROOT / 'dist/index.html').write_text(template.replace('{{GALLERY}}', '\n'.join(cards)), encoding='utf-8')
 shutil.copyfile(ROOT / 'site.css', ROOT / 'dist/style.css')
 shutil.copyfile(ROOT / 'site.js', ROOT / 'dist/app.js')
-(ROOT / 'dist/team-south.vcf').write_bytes(('BEGIN:VCARD\r\nVERSION:3.0\r\nFN:TEAM SOUTH\r\nORG:TEAM SOUTH\r\nTEL;TYPE=WORK,VOICE:+48797559814\r\nEMAIL;TYPE=WORK:biuro@teamsouth.pl\r\nADR;TYPE=WORK:;;Niedźwiedź 145;Niedźwiedź;;34-735;Polska\r\nURL:https://teamsouth.pl/\r\nEND:VCARD\r\n').encode('utf-8'))
+(ROOT / 'dist/team-south.vcf').write_bytes(('BEGIN:VCARD\r\nVERSION:3.0\r\nFN:TEAM SOUTH\r\nN:TEAM SOUTH;;;;\r\nORG:TEAM SOUTH\r\nTEL;TYPE=WORK,VOICE:+48797559814\r\nEMAIL;TYPE=WORK:biuro@teamsouth.pl\r\nADR;TYPE=WORK:;;Niedźwiedź 145;Niedźwiedź;;34-735;Polska\r\nURL:https://teamsouth.pl/\r\nEND:VCARD\r\n').encode('utf-8'))
 print(f'Built static site with {len(gallery)} gallery photographs.')
