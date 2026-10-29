@@ -4,6 +4,8 @@ Autorska wersja poglądowa przebudowy https://teamsouth.pl/.
 
 Aktualna analiza strony, obecności w sieci i zakres wdrożenia: `AUDYT-V2.md`.
 
+Aktualna oprawa wizualna: `SZATA-GRAFICZNA.md` — biel, grafit `#231f20` i szarości na podstawie oryginalnej strony; zastępuje wcześniejszą zieloną koncepcję.
+
 Budowanie: `python build.py`. Kontrola plików: `python verify.py` oraz `node --check dist/app.js`.
 
 Podgląd: `python -m http.server 8178 --bind 127.0.0.1 --directory dist`, następnie http://127.0.0.1:8178/.
