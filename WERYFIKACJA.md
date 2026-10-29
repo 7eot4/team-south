@@ -3,11 +3,12 @@
 ## Rozbudowa interaktywna v2
 
 - `python build.py`, `python verify.py`, `node --check dist/app.js`: PASS.
-- Kontrola statyczna: 62 unikalne identyfikatory HTML, 46 lokalnych odwołań do zasobów, poprawne kotwice, brak automatycznej wysyłki i trwałego zapisu danych.
+- Kontrola statyczna: 66 unikalnych identyfikatorów HTML, 49 lokalnych odwołań do zasobów, poprawne kotwice, brak automatycznej wysyłki i trwałego zapisu danych.
 - Testy `tests/browser_check.py` w zainstalowanym Edge: wszystkie pięć usług; cztery filtry galerii; paginacja 6/12/16; okno zdjęć, klawisze strzałek i Esc, fokus modalny i powrót do miniatury.
 - Kreator: puste i białe pola, wybór usługi, podsumowanie, bezpieczne wyświetlanie tekstu użytkownika, zgodna treść mailto, zawartość schowka, plik TXT, długa wiadomość, cofanie i reset.
 - Pomocnik: powierzchnia 10 × 5 = 50 m² i objętość 10 × 5 × 0,3 = 15 m³; odrzucenie ujemnych danych; przekazanie do kreatora bez omijania wyboru usługi.
 - FAQ, plik vCard, kopiowanie e-mail, zapasowe udostępnianie linku i okno informacji o prywatności: PASS.
+- Ikony Facebook, Instagram i LinkedIn: każda jest przyciskiem, otwiera właściwie podpisane okno z informacją o niepodłączonym profilu, nie prowadzi do zewnętrznego konta, zamyka się klawiszem Esc i oddaje fokus właściwemu przyciskowi. Ikony nie wywołują żądań do serwisów społecznościowych.
 - Brak zapytań do stron trzecich przed kliknięciem mapy. Test mapy sprawdza wstawienie iframe po kliknięciu; zewnętrzna odpowiedź Google jest zastąpiona lokalną odpowiedzią testową. Nie dowodzi to dokładności punktu ani dostępności usługi Google.
 - Szerokości 1440/1024/768/540/390/320 px, menu mobilne, obrazy, ograniczone animacje oraz kontakt i galeria bez JavaScript: PASS. Osobno sprawdzono podsumowanie kreatora przy 320 px.
 - Brak błędów JavaScript, błędnych odpowiedzi HTTP oraz wpisów localStorage/sessionStorage w sprawdzonych ścieżkach. Po odświeżeniu dane kreatora nie są odtwarzane.

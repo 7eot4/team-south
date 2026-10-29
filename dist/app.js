@@ -180,6 +180,14 @@ $('#open-privacy').addEventListener('click', () => { privacy.showModal(); docume
 $('#close-privacy').addEventListener('click', () => privacy.close());
 privacy.addEventListener('close', () => document.body.classList.remove('modal-open'));
 
+const socialDialog = $('#social-dialog');
+$$('[data-social]').forEach(button => button.addEventListener('click', () => {
+  $('#social-dialog-title').textContent = button.dataset.social;
+  socialDialog.showModal(); document.body.classList.add('modal-open');
+}));
+$('#close-social').addEventListener('click', () => socialDialog.close());
+socialDialog.addEventListener('close', () => document.body.classList.remove('modal-open'));
+
 let scrollQueued = false;
 function updateProgress() {
   const distance = document.documentElement.scrollHeight - innerHeight;

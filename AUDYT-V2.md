@@ -18,7 +18,9 @@ Treść „działa od 2 lat” jest zależna od daty i nie została przeniesiona
 
 Sprawdzono odnośniki na stronie oraz wyszukiwanie po domenie, nazwie, miejscowości, nazwisku i telefonie, w tym zapytania ograniczone do Facebooka i Instagrama. W dostępnym HTML i wyrenderowanej stronie nie ma odnośników do Facebooka, Instagrama, LinkedIn ani TikToka. W wyszukiwaniu nie uzyskano wystarczającego dowodu wskazującego oficjalny profil firmy.
 
-To nie dowodzi, że profile nie istnieją — mogą być nieindeksowane, inaczej nazwane lub ograniczone logowaniem. Nie dodano niezweryfikowanych kont, zmyślonych postów, liczników obserwujących ani ocen. Użytkownik został poproszony o ewentualny znany link; brak odpowiedzi nie jest potwierdzeniem tożsamości profilu.
+To nie dowodzi, że profile nie istnieją — mogą być nieindeksowane, inaczej nazwane lub ograniczone logowaniem. Nie dodano niezweryfikowanych kont, zmyślonych postów, liczników obserwujących ani ocen. Zgodnie z uzupełnieniem briefu przygotowano interaktywne ikony Facebooka, Instagrama i LinkedIna bez adresów. Kliknięcie otwiera informację o niepodłączonym profilu i podaje kontakt telefoniczny/mailowy. Nie otwiera zewnętrznej platformy i nie udaje aktywnego konta. Po potwierdzeniu adresów można podłączyć właściwe profile.
+
+Grafiki platform: Bootstrap Icons (https://github.com/twbs/icons), licencja MIT dołączona w `dist/assets/icons/LICENSE.txt`. Ikony są lokalne i nie pobierają skryptów platform społecznościowych.
 
 W wynikach występują co najmniej dwa profile Oferteo: https://www.oferteo.pl/team-south/firma/6406362 oraz https://www.oferteo.pl/team-south-kowalczyk/firma/5122321. Różnią się opisem i opiniami. Bez bezpośredniego potwierdzenia firmy nie połączono ich ocen i nie przeniesiono referencji na stronę. Nie użyto serwisów opinii pracowniczych jako opinii klientów.
 
@@ -40,7 +42,7 @@ Nie kopiowano zdjęć samorządowych, nazw osób uczestniczących w odbiorach an
 6. Kreator zapytania: zakres, rodzaj inwestora, miejscowość, orientacyjny rozmiar, termin, opis i informacja o dokumentacji. Walidacja pól, cofanie i wyczyszczenie danych.
 7. Podsumowanie zapytania, kopiowanie, plik TXT oraz otwarcie w aplikacji pocztowej. Długi link pocztowy zastępuje czytelna wskazówka, aby skopiować/pobrać treść. Brak pozornej wysyłki lub rezerwacji.
 8. Pomocnik powierzchni i objętości prostokątnego obszaru; kontrola dodatnich wymiarów i przeniesienie wyniku do zapytania. To wynik geometryczny, bez ceny i bez założeń konstrukcyjnych.
-9. FAQ w rozwijanych sekcjach; prosty kontakt telefoniczny, e-mail, plik vCard, kopiowanie adresu, udostępnianie strony i wyznaczanie trasy.
+9. FAQ w rozwijanych sekcjach; prosty kontakt telefoniczny, e-mail, plik vCard, kopiowanie adresu, udostępnianie strony i wyznaczanie trasy. Trzy interaktywne ikony społecznościowe z informacją o braku podłączonych profili.
 10. Mapa Google ładowana tylko po kliknięciu. Brak zewnętrznych zapytań przy pierwszym wczytaniu strony poza hostingiem.
 11. Na telefonie stały pasek kontaktowy, menu zamykane po wyborze sekcji, aktywna sekcja i pasek postępu przewijania.
 12. Obsługa klawiatury, widoczny fokus, etykiety formularza, komunikaty statusu, ograniczenie animacji według ustawień użytkownika, podstawowa oferta/kontakt/galeria także przy wyłączonym JavaScript.

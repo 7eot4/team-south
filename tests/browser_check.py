@@ -133,11 +133,23 @@ with sync_playwright() as p:
     expect(page.locator('#privacy-dialog')).to_be_visible()
     page.keyboard.press('Escape')
     expect(page.locator('#privacy-dialog')).to_be_hidden()
+    for network in ['Facebook', 'Instagram', 'LinkedIn']:
+        icon = page.locator(f'[data-social="{network}"]')
+        assert icon.evaluate('(button)=>button.tagName') == 'BUTTON'
+        icon.click()
+        expect(page.locator('#social-dialog')).to_be_visible()
+        expect(page.locator('#social-dialog-title')).to_have_text(network)
+        expect(page.locator('#social-dialog')).to_contain_text('Profil nie jest jeszcze podłączony.')
+        assert page.locator('#social-dialog a[href^="https://"]').count() == 0
+        page.locator('#social-dialog').screenshot(path=str(ARTIFACTS / f'social-{network.lower()}.png'))
+        page.keyboard.press('Escape')
+        expect(page.locator('#social-dialog')).to_be_hidden()
+        expect(icon).to_be_focused()
     with page.expect_download() as vcard_info: page.get_by_role('link', name='Zapisz kontakt').click()
     vcard = Path(vcard_info.value.path()).read_text(encoding='utf-8')
     assert all(item in vcard for item in ['FN:TEAM SOUTH', '+48797559814', 'biuro@teamsouth.pl'])
     assert not any(urlsplit(url).netloc != urlsplit(BASE).netloc for url in requests)
-    print('PASS FAQ, email, sharing fallback, privacy dialog, vCard; zero third-party requests before map consent')
+    print('PASS FAQ, three social placeholders, email, sharing fallback, privacy dialog, vCard; zero third-party requests before map consent')
 
     for width in [1440, 1024, 768, 540, 390, 320]:
         page.set_viewport_size({'width': width, 'height': 900})
@@ -154,6 +166,7 @@ with sync_playwright() as p:
     page.locator('#poczatek').scroll_into_view_if_needed()
     page.locator('.hero').screenshot(path=str(ARTIFACTS / 'desktop-hero.png'))
     page.locator('#oferta').screenshot(path=str(ARTIFACTS / 'desktop-services.png'))
+    page.locator('.social-strip').screenshot(path=str(ARTIFACTS / 'social-icons.png'))
     page.evaluate("scrollTo({top:0,behavior:'instant'})")
     page.screenshot(path=str(ARTIFACTS / 'desktop.png'), full_page=True)
     page.set_viewport_size({'width': 390, 'height': 844})

@@ -16,6 +16,8 @@ Adres publikacji: https://7eot4.github.io/team-south/
 
 Opcjonalne odtworzenie zoptymalizowanych zasobów: `python build_assets.py` (wymaga Pillow i dostępu do źródeł). Hosting i zwykły build nie pobierają materiałów z sieci ani nie wymagają Pillow. Fonty zawierają licencje OFL.
 
+Ikony Facebook/Instagram/LinkedIn są lokalnymi grafikami Bootstrap Icons z licencją MIT. Przyciski `data-social` otwierają informację o niepodłączonym profilu i alternatywnym kontakcie. Celowo nie mają fikcyjnych odnośników; podłączenie profili wymaga ich rzeczywistych, potwierdzonych adresów.
+
 Kontrola przeglądarkowa: `python tests/browser_check.py http://127.0.0.1:8178/` (Playwright i zainstalowany Edge; `python -m pip install playwright`). Ten sam skrypt obsługuje publiczny URL. Artefakty QA są zapisywane w ignorowanym `.local/qa-v2`.
 
 Kreator nie zapisuje i nie wysyła danych. Generuje treść, link do poczty, plik TXT lub zawartość schowka. Długi tekst ma alternatywę kopiowania/pobrania. Mapa Google ładuje się dopiero po kliknięciu. Brak analityki i zewnętrznych fontów. Nie zmienia oryginalnej domeny.
