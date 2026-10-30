@@ -15,11 +15,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu();
 matchMedia('(min-width: 801px)').addEventListener('change', closeMenu);
 
 const services = {
-  ziemne: { kicker: 'ROBOTY ZIEMNE', title: 'Wykopy i niwelacja terenu', description: 'Przygotowanie działki pod inwestycję oraz prace ziemne z użyciem koparek i minikoparek.', items: ['Wykopy i przygotowanie gruntu', 'Wyrównanie i niwelacja terenu', 'Prace z użyciem koparek i minikoparek'], tip: 'Przygotuj lokalizację, orientacyjne wymiary oraz informacje o dojeździe do działki.', image: '07', alt: 'Minikoparka podczas prac terenowych' },
-  bruk: { kicker: 'BRUKARSTWO', title: 'Podjazdy, chodniki i nawierzchnie', description: 'Nawierzchnie z kostki brukowej, płyt betonowych i innych materiałów przy domach i obiektach przemysłowych.', items: ['Podjazdy i ciągi piesze', 'Kostka brukowa i płyty betonowe', 'Nawierzchnie przy obiektach przemysłowych'], tip: 'Podaj przybliżoną powierzchnię, rodzaj istniejącego podłoża i planowane przeznaczenie nawierzchni.', image: '08', alt: 'Gotowa nawierzchnia z kostki brukowej' },
-  drogi: { kicker: 'INFRASTRUKTURA DROGOWA', title: 'Drogi i ciągi komunikacyjne', description: 'Budowa dróg, chodników i ścieżek rowerowych. Zakres i organizację prac ustalamy dla konkretnej inwestycji.', items: ['Budowa chodników', 'Ścieżki rowerowe', 'Nawierzchnie dróg i ciągów komunikacyjnych'], tip: 'Przygotuj lokalizację, długość i szerokość odcinka oraz informację o dostępnej dokumentacji.', image: '01', alt: 'Chodnik wzdłuż drogi — galeria firmy' },
-  rekreacja: { kicker: 'REKREACJA', title: 'Place zabaw i tereny rekreacyjne', description: 'Budowa placów zabaw i zagospodarowanie przestrzeni przy obiektach sportowych oraz rekreacyjnych.', items: ['Place zabaw', 'Otoczenie obiektów sportowych', 'Nawierzchnie i przestrzenie rekreacyjne'], tip: 'Opisz przeznaczenie terenu, jego powierzchnię i zakres projektu. Przekaż dokumentację, jeśli jest dostępna.', image: '26', alt: 'Kolorowa przestrzeń rekreacyjna — galeria firmy' },
-  zielen: { kicker: 'TERENY ZIELONE', title: 'Parki, ogrody i otoczenie budynków', description: 'Przygotowanie i zagospodarowanie terenu przy inwestycjach prywatnych oraz publicznych.', items: ['Zagospodarowanie terenów zielonych', 'Przestrzenie parkowe', 'Otoczenie inwestycji prywatnych i publicznych'], tip: 'Przygotuj zdjęcia, orientacyjną powierzchnię i opis planowanych zmian. Zaznacz, które elementy mają pozostać.', image: '09', alt: 'Zagospodarowany ogród z zielenią i ścieżkami' }
+  ziemne: { kicker: 'ROBOTY ZIEMNE', title: 'Wykopy i niwelacja terenu', description: 'Zanim pojawi się kostka, trawnik czy chodnik, trzeba przygotować grunt. Wykonujemy wykopy i niwelację — na działkach i przy większych inwestycjach.', items: ['Wykopy i przygotowanie gruntu', 'Wyrównanie i niwelacja terenu', 'Prace z użyciem koparek i minikoparek'], tip: 'Przygotuj lokalizację, orientacyjne wymiary oraz informacje o dojeździe do działki.', image: '07', alt: 'Minikoparka podczas prac terenowych' },
+  bruk: { kicker: 'BRUKARSTWO', title: 'Podjazdy, chodniki i nawierzchnie', description: 'Podjazd, który prowadzi pod dom. Ścieżka przez ogród. Plac przy hali. Układamy kostkę i płyty tam, gdzie potrzebna jest nawierzchnia do codziennego użytku.', items: ['Podjazdy i ciągi piesze', 'Kostka brukowa i płyty betonowe', 'Nawierzchnie przy obiektach przemysłowych'], tip: 'Podaj przybliżoną powierzchnię, rodzaj istniejącego podłoża i planowane przeznaczenie nawierzchni.', image: '08', alt: 'Gotowa nawierzchnia z kostki brukowej' },
+  drogi: { kicker: 'INFRASTRUKTURA DROGOWA', title: 'Drogi i ciągi komunikacyjne', description: 'Chodnik do szkoły, ścieżka rowerowa, droga dojazdowa. Budujemy ciągi komunikacyjne, które łączą miejsca i służą ludziom każdego dnia.', items: ['Budowa chodników', 'Ścieżki rowerowe', 'Nawierzchnie dróg i ciągów komunikacyjnych'], tip: 'Przygotuj lokalizację, długość i szerokość odcinka oraz informację o dostępnej dokumentacji.', image: '01', alt: 'Chodnik wzdłuż drogi — galeria firmy' },
+  rekreacja: { kicker: 'REKREACJA', title: 'Place zabaw i tereny rekreacyjne', description: 'Miejsce na zabawę, ruch i chwilę na zewnątrz. Budujemy place zabaw i zagospodarowujemy otoczenie obiektów sportowych — razem z nawierzchniami.', items: ['Place zabaw', 'Otoczenie obiektów sportowych', 'Nawierzchnie i przestrzenie rekreacyjne'], tip: 'Opisz przeznaczenie terenu, jego powierzchnię i zakres projektu. Przekaż dokumentację, jeśli jest dostępna.', image: '26', alt: 'Kolorowa przestrzeń rekreacyjna — galeria firmy' },
+  zielen: { kicker: 'TERENY ZIELONE', title: 'Parki, ogrody i otoczenie budynków', description: 'Po budowie przychodzi czas na otoczenie. Przygotowujemy teren i urządzamy zieleń przy domach, firmach i w przestrzeni publicznej.', items: ['Zagospodarowanie terenów zielonych', 'Przestrzenie parkowe', 'Otoczenie inwestycji prywatnych i publicznych'], tip: 'Przygotuj zdjęcia, orientacyjną powierzchnię i opis planowanych zmian. Zaznacz, które elementy mają pozostać.', image: '09', alt: 'Zagospodarowany ogród z zielenią i ścieżkami' }
 };
 $$('[data-service]').forEach(button => button.addEventListener('click', () => {
   const key = button.dataset.service, service = services[key];
@@ -213,13 +213,18 @@ $('#close-privacy').addEventListener('click', () => privacy.close());
 privacy.addEventListener('close', () => document.body.classList.remove('modal-open'));
 
 const socialDialog = $('#social-dialog');
+let socialTrigger;
 $$('[data-social]').forEach(button => button.addEventListener('click', () => {
+  socialTrigger = button;
   closeMenu();
   $('#social-dialog-title').textContent = button.dataset.social;
   socialDialog.showModal(); document.body.classList.add('modal-open');
 }));
 $('#close-social').addEventListener('click', () => socialDialog.close());
-socialDialog.addEventListener('close', () => document.body.classList.remove('modal-open'));
+socialDialog.addEventListener('close', () => {
+  document.body.classList.remove('modal-open');
+  if (socialTrigger) (socialTrigger.getClientRects().length ? socialTrigger : menu).focus();
+});
 
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {

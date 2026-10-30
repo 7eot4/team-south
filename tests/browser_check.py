@@ -17,7 +17,7 @@ with sync_playwright() as p:
     page.on('response', lambda response: failed.append((response.status, response.url)) if response.status >= 400 else None)
     page.on('request', lambda request: requests.append(request.url))
     page.goto(BASE, wait_until='networkidle')
-    expect(page.locator('h1')).to_contain_text('Roboty ziemne')
+    expect(page.locator('h1')).to_contain_text('porządna robota')
     assert page.locator('.brand img').evaluate('(i)=>i.complete && i.naturalWidth > 0')
     assert not any(urlsplit(url).netloc != urlsplit(BASE).netloc for url in requests), requests
     assert page.locator('iframe').count() == 0
@@ -172,6 +172,8 @@ with sync_playwright() as p:
         page.set_viewport_size({'width': width, 'height': 900})
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f'overflow at {width}'
         if width < 801:
+            page.locator('.menu').click()
+            expect(page.locator('.menu')).to_have_attribute('aria-expanded', 'true')
             for icon in page.locator('.header-socials .social-button').all():
                 expect(icon).to_be_visible()
                 box = icon.bounding_box()
@@ -180,7 +182,7 @@ with sync_playwright() as p:
             mobile_icon.click()
             expect(page.locator('#social-dialog')).to_be_visible()
             page.keyboard.press('Escape')
-            expect(mobile_icon).to_be_focused()
+            expect(page.locator('.menu')).to_be_focused()
             page.locator('.menu').click()
             expect(page.locator('.menu')).to_have_attribute('aria-expanded', 'true')
             page.locator('#navigation').get_by_role('link', name='Oferta', exact=True).click()
