@@ -69,7 +69,7 @@ input:focus,select:focus,textarea:focus{border-color:#555;box-shadow:0 0 0 2px #
 }
 .button:active,.outline-button:active,.nav-contact:active{transform:translateY(0) scale(.985)}
 @supports(animation-timeline:scroll()){
-  .site-header::after{content:'';position:fixed;top:0;left:0;width:100%;height:2px;background:#231f20;pointer-events:none;transform-origin:left;animation:reading-progress 1s linear both;animation-timeline:scroll(root block)}
+  html.has-scrolled .site-header::after{content:'';position:fixed;top:0;left:0;width:100%;height:2px;background:#231f20;pointer-events:none;transform-origin:left;animation:reading-progress 1s linear both;animation-timeline:scroll(root block)}
 }
 @media(prefers-reduced-motion:reduce){
   dialog[open],dialog[open]::backdrop,details[open]>p,details[open]>.reference-grid,details[open]>ul{animation:none}

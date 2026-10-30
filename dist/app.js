@@ -33,6 +33,7 @@ navigation.addEventListener('click', e => { if (e.target.closest('a')) closeMenu
 document.addEventListener('click', e => { if (!e.target.closest('.site-header')) closeMenu(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 matchMedia('(min-width: 801px)').addEventListener('change', closeMenu);
+window.addEventListener('scroll', () => document.documentElement.classList.add('has-scrolled'), { passive: true, once: true });
 
 const services = {
   ziemne: { kicker: 'ROBOTY ZIEMNE', title: 'Wykopy i niwelacja terenu', description: 'Zanim pojawi się kostka, trawnik czy chodnik, trzeba przygotować grunt. Wykonujemy wykopy i niwelację — na działkach i przy większych inwestycjach.', items: ['Wykopy i przygotowanie gruntu', 'Wyrównanie i niwelacja terenu', 'Prace z użyciem koparek i minikoparek'], tip: 'Przygotuj lokalizację, orientacyjne wymiary oraz informacje o dojeździe do działki.', image: '07', alt: 'Minikoparka podczas prac terenowych' },
