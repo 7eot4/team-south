@@ -69,3 +69,9 @@ input:focus,select:focus,textarea:focus{border-color:#555;box-shadow:0 0 0 2px #
   .gallery-link:hover img,.service-photo:hover img,.equipment-image:hover img,.hero-detail:hover,.button:hover,.outline-button:hover,.nav-contact:hover,.button:active,.outline-button:active,.nav-contact:active{transform:none}
 }
 @media(max-width:800px){#navigation{max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}}
+.menu-lines{position:relative;display:inline-block;flex:0 0 14px;width:14px;height:12px;background:linear-gradient(currentColor,currentColor) center/100% 1.5px no-repeat;transition:background-size .2s ease}
+.menu-lines::before,.menu-lines::after{content:'';position:absolute;left:0;width:100%;height:1.5px;background:currentColor;transition:transform .24s ease}
+.menu-lines::before{top:0}.menu-lines::after{bottom:0}
+.menu[aria-expanded=true] .menu-lines{background-size:0 1.5px}
+.menu[aria-expanded=true] .menu-lines::before{transform:translateY(5.25px) rotate(45deg)}
+.menu[aria-expanded=true] .menu-lines::after{transform:translateY(-5.25px) rotate(-45deg)}
