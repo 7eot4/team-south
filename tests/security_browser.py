@@ -99,6 +99,17 @@ with sync_playwright() as p:
     tamper.close()
     print('PASS tampered JavaScript: SRI rejects modified bytes; contact remains available and form fails closed.')
 
+    calc_tamper=browser.new_context(viewport={'width':390,'height':844})
+    calc_tamper.route('**/estimate.js?*',tampered_script)
+    calc_page=calc_tamper.new_page();calc_page.goto(BASE,wait_until='networkidle')
+    assert calc_page.evaluate('window.__tampered||0')==0
+    assert 'no-js' not in calc_page.locator('html').get_attribute('class')
+    expect(calc_page.locator('.inquiry-form')).to_be_visible()
+    expect(calc_page.locator('#kalkulator>.script-fallback')).to_be_visible()
+    expect(calc_page.locator('.estimate-layout')).to_be_hidden()
+    calc_tamper.close()
+    print('PASS tampered calculator: separate SRI gate, calculator stays unavailable while enquiry and contact remain usable.')
+
     fault=browser.new_context(viewport={'width':1440,'height':1000});fault_page=fault.new_page()
     fault_page.goto(BASE,wait_until='networkidle')
     target=fault_page.locator('.gallery-card:visible .gallery-link').first

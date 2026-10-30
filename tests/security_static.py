@@ -30,8 +30,8 @@ for tag,a in doc.tags:
         expected='sha384-'+base64.b64encode(hashlib.sha384(content).digest()).decode()
         assert a.get('integrity')==expected,reference
         if tag=='script': script_integrities.append(expected)
-assert len(script_integrities)==1
-assert f"script-src '{script_integrities[0]}'" in policy
+assert len(script_integrities)==2
+assert policy.split('script-src ',1)[1].split(';',1)[0].split()==[f"'{integrity}'" for integrity in script_integrities]
 assert doc.tags.index(next((t,a) for t,a in doc.tags if t=='meta' and a.get('http-equiv','').lower()=='content-security-policy')) < next(i for i,(t,a) in enumerate(doc.tags) if t in ['script','link'])
 for path in DIST.rglob('*.svg'):
     root=ET.parse(path).getroot()
@@ -40,7 +40,7 @@ for path in DIST.rglob('*.svg'):
         assert not any(name.lower().startswith('on') for name in element.attrib),path
         for name,value in element.attrib.items():
             if name.split('}')[-1] in ['href','src']: assert not value or value.startswith('#'),path
-code=(ROOT/'site.js').read_text(encoding='utf-8')
+code=(ROOT/'site.js').read_text(encoding='utf-8')+'\n'+(ROOT/'estimate.js').read_text(encoding='utf-8')
 for sink in ['innerHTML','outerHTML','insertAdjacentHTML','document.write','eval(', 'new Function(', 'localStorage','sessionStorage','sendBeacon','XMLHttpRequest']:
     assert sink not in code,sink
 workflow=(ROOT/'.github/workflows/pages.yml').read_text(encoding='utf-8')

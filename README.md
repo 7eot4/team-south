@@ -22,7 +22,7 @@ Kalkulator orientacyjnego budżetu jest w sekcji `#kalkulator`: kostka (sama rob
 
 Animacje zachowują czarno-biały styl: wejścia sekcji podczas przewijania, stopniowe wejście nagłówka, reakcje przycisków i zdjęć, zmiany galerii, kroki formularza, menu, rozwijane odpowiedzi i okna podglądu. Cienka linia postępu czytania korzysta z obsługiwanej przez przeglądarkę osi przewijania; w pozostałych silnikach jest pomijana. Bez bibliotek i pętli ruchu w tle. Treść pozostaje widoczna bez animacji; systemowe `prefers-reduced-motion` wyłącza efekty, również po zmianie ustawienia w trakcie wizyty. Test: `python tests/motion_check.py https://7eot4.github.io/team-south/`.
 
-Źródła strony: `site.html`, `site.css`, `site.js`; katalog galerii w `build.py`. Nie edytuj ręcznie wygenerowanych `dist/index.html`, `dist/style.css` ani `dist/app.js`. Zasoby zdjęć i logo są w `dist/assets`, a ich pochodzenie w `dist/assets/sources.json`.
+Źródła strony: `site.html`, `site.css`, `site.js`, `estimate.js`; katalog galerii w `build.py`. Nie edytuj ręcznie wygenerowanych `dist/index.html`, `dist/style.css`, `dist/app.js` ani `dist/estimate.js`. Zasoby zdjęć i logo są w `dist/assets`, a ich pochodzenie w `dist/assets/sources.json`.
 
 Opcjonalne odtworzenie zoptymalizowanych zasobów: `python build_assets.py` (wymaga Pillow i dostępu do źródeł). Hosting i zwykły build nie pobierają materiałów z sieci ani nie wymagają Pillow. Fonty zawierają licencje OFL.
 

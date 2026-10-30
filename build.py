@@ -42,7 +42,7 @@ whatsapp_message = 'Dzień dobry, chciałbym zapytać o ofertę TEAM SOUTH.\n\nZ
 whatsapp_url = 'https://wa.me/48797559814?text=' + quote(whatsapp_message, safe='')
 html = html.replace('{{WHATSAPP_URL}}', escape(whatsapp_url, quote=True))
 integrities = {}
-for source, target, attribute in [('site.css', 'style.css', 'href'), ('site.js', 'app.js', 'src')]:
+for source, target, attribute in [('site.css', 'style.css', 'href'), ('site.js', 'app.js', 'src'), ('estimate.js', 'estimate.js', 'src')]:
     content = (ROOT / source).read_text(encoding='utf-8').encode('utf-8')
     version = hashlib.sha256(content).hexdigest()[:12]
     integrity = 'sha384-' + base64.b64encode(hashlib.sha384(content).digest()).decode('ascii')
@@ -55,7 +55,7 @@ font_css.write_bytes(font_content)
 font_integrity = 'sha384-' + base64.b64encode(hashlib.sha384(font_content).digest()).decode('ascii')
 font_version = hashlib.sha256(font_content).hexdigest()[:12]
 html = html.replace('href="assets/fonts/fonts.css"', f'href="assets/fonts/fonts.css?v={font_version}" integrity="{font_integrity}" crossorigin="anonymous"')
-csp = f"default-src 'none'; script-src '{integrities['app.js']}'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src https://www.google.com https://maps.google.com; worker-src 'none'; upgrade-insecure-requests"
+csp = f"default-src 'none'; script-src '{integrities['app.js']}' '{integrities['estimate.js']}'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src https://www.google.com https://maps.google.com; worker-src 'none'; upgrade-insecure-requests"
 html = html.replace('{{CSP}}', csp)
 (ROOT / 'dist/index.html').write_text(html, encoding='utf-8')
 (ROOT / 'dist/team-south.vcf').write_bytes(('BEGIN:VCARD\r\nVERSION:3.0\r\nFN:TEAM SOUTH\r\nN:TEAM SOUTH;;;;\r\nORG:TEAM SOUTH\r\nTEL;TYPE=WORK,VOICE:+48797559814\r\nEMAIL;TYPE=WORK:biuro@teamsouth.pl\r\nADR;TYPE=WORK:;;Niedźwiedź 145;Niedźwiedź;;34-735;Polska\r\nURL:https://teamsouth.pl/\r\nEND:VCARD\r\n').encode('utf-8'))

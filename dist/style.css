@@ -114,3 +114,6 @@ input:focus,select:focus,textarea:focus{border-color:#555;box-shadow:0 0 0 2px #
 body:has(.estimate-controls:focus-within) .mobile-contact{display:none}
 @media(max-width:800px){.estimate-layout{gap:22px}.estimate-controls,.estimate-result{padding:20px}.estimate-dimensions{grid-template-columns:1fr}.estimate-options{gap:0}#estimate-depth-field{grid-column:auto}.estimate-breakdown{font-size:11px}.estimate-breakdown>div{gap:10px}}
 @media(max-width:620px){.estimate-layout{grid-template-columns:1fr}.estimate-dimensions:not(.estimate-options){grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}#estimate-depth-field{grid-column:1/-1}.estimate-controls,.estimate-result{padding:22px 18px}.estimate-total{font-size:30px}.estimate-breakdown{font-size:12px}}
+
+.estimate-pending .estimate-layout{display:none}
+.estimate-pending>.script-fallback{display:block;font-size:12px}

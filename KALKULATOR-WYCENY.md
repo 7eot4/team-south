@@ -4,7 +4,7 @@ Wdrożenie przygotowane 30.10.2026. Użytkownik zlecił kalkulacje wyceny; cenni
 
 ## Dane i zakres
 
-Jedno źródło danych w aplikacji: `estimateCatalogue` i `estimateFoundationRate` w `site.js`. Ceny nie są pobierane z sieci podczas wizyty. Brak zapisywania danych klienta.
+Jedno źródło danych w aplikacji: `estimateCatalogue` i `estimateFoundationRate` w `estimate.js`. Ceny nie są pobierane z sieci podczas wizyty. Brak zapisywania danych klienta. Kalkulator i główna obsługa strony są osobnymi skryptami `defer`, aby nie przetwarzać całego kodu jako jednego dużego zadania. Oba mają własne hashe CSP i SRI. Przy niedostępnym kalkulatorze pozostaje komunikat z kontaktem; niesprawny skrypt podstawowy blokuje również uruchomienie kalkulatora.
 
 | Model | Jednostka | Przyjęta cena netto | Źródło i ograniczenie |
 |---|---|---|---|
