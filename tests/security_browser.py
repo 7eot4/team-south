@@ -92,7 +92,9 @@ with sync_playwright() as p:
     assert clean_page.evaluate('window.__tampered||0')==0
     assert clean_page.locator('html').get_attribute('class')=='no-js'
     expect(clean_page.locator('.inquiry-form')).to_be_hidden()
-    expect(clean_page.locator('.script-fallback')).to_be_visible()
+    expect(clean_page.locator('.planner>.script-fallback')).to_be_visible()
+    expect(clean_page.locator('#kalkulator>.script-fallback')).to_be_visible()
+    expect(clean_page.locator('.estimate-layout')).to_be_hidden()
     expect(clean_page.locator('.phone')).to_be_visible()
     tamper.close()
     print('PASS tampered JavaScript: SRI rejects modified bytes; contact remains available and form fails closed.')

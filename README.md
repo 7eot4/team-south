@@ -18,6 +18,8 @@ Publikacja w `.github/workflows/pages.yml`: zbudowanie i weryfikacja strony, kat
 
 Adres publikacji: https://7eot4.github.io/team-south/
 
+Kalkulator orientacyjnego budżetu jest w sekcji `#kalkulator`: kostka (sama robocizna albo materiał z ułożeniem), praca z masami ziemi i godziny minikoparki. Ilość można podać bezpośrednio lub obliczyć z wymiarów. Opcjonalnie dolicza podbudowę, znane koszty dodatkowe i własną rezerwę. Kwoty netto pochodzą z jawnych referencji, nie z potwierdzonego cennika TEAM SOUTH. Źródła, zakres i wzory: `KALKULATOR-WYCENY.md`. Wynik można dołączyć do zapytania; zmiana danych odłącza nieaktualną kalkulację. Test trzech silników: `python tests/estimate_check.py https://7eot4.github.io/team-south/`.
+
 Animacje zachowują czarno-biały styl: wejścia sekcji podczas przewijania, stopniowe wejście nagłówka, reakcje przycisków i zdjęć, zmiany galerii, kroki formularza, menu, rozwijane odpowiedzi i okna podglądu. Cienka linia postępu czytania korzysta z obsługiwanej przez przeglądarkę osi przewijania; w pozostałych silnikach jest pomijana. Bez bibliotek i pętli ruchu w tle. Treść pozostaje widoczna bez animacji; systemowe `prefers-reduced-motion` wyłącza efekty, również po zmianie ustawienia w trakcie wizyty. Test: `python tests/motion_check.py https://7eot4.github.io/team-south/`.
 
 Źródła strony: `site.html`, `site.css`, `site.js`; katalog galerii w `build.py`. Nie edytuj ręcznie wygenerowanych `dist/index.html`, `dist/style.css` ani `dist/app.js`. Zasoby zdjęć i logo są w `dist/assets`, a ich pochodzenie w `dist/assets/sources.json`.
