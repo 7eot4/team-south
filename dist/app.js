@@ -1,6 +1,25 @@
 'use strict';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+const activeMotions = new Set();
+const elementMotions = new WeakMap();
+let revealObserver;
+function playMotion(element, frames, options = {}) {
+  if (!element || motionPreference.matches || typeof element.animate !== 'function') return;
+  elementMotions.get(element)?.cancel();
+  const animation = element.animate(frames, { duration: 480, easing: 'cubic-bezier(.22,1,.36,1)', ...options });
+  activeMotions.add(animation); elementMotions.set(element, animation);
+  animation.finished.catch(() => {}).finally(() => activeMotions.delete(animation));
+}
+function enterMotion(element, delay = 0, distance = 14) {
+  playMotion(element, [{ opacity: .12, transform: `translateY(${distance}px)` }, { opacity: 1, transform: 'translateY(0)' }], { duration: 620, delay, fill: 'backwards' });
+}
+motionPreference.addEventListener('change', () => {
+  if (!motionPreference.matches) return;
+  activeMotions.forEach(animation => animation.cancel());
+  activeMotions.clear(); revealObserver?.disconnect();
+});
 const wellFormed = text => typeof text.toWellFormed === 'function' ? text.toWellFormed() : text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDFFF]/g, token => token.length === 2 ? token : '\uFFFD');
 const menu = $('.menu');
 const navigation = $('#navigation');
@@ -8,6 +27,7 @@ function closeMenu() { menu.setAttribute('aria-expanded', 'false'); navigation.c
 menu.addEventListener('click', () => {
   const open = menu.getAttribute('aria-expanded') !== 'true';
   menu.setAttribute('aria-expanded', String(open)); navigation.classList.toggle('open', open);
+  if (open) playMotion(navigation, [{ opacity: .3, transform: 'translateY(-8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240 });
 });
 navigation.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
 document.addEventListener('click', e => { if (!e.target.closest('.site-header')) closeMenu(); });
@@ -33,25 +53,31 @@ $$('[data-service]').forEach(button => button.addEventListener('click', () => {
   $('#service-image').src = `assets/work-${service.image}-1400.webp`;
   $('#service-image').alt = service.alt;
   $('.choose-service').dataset.selectService = key;
+  enterMotion($('.service-copy'), 0, 8);
 }));
+$('#service-image').addEventListener('load', () => playMotion($('#service-image'), [{ opacity: .55 }, { opacity: 1 }], { duration: 360 }));
 
 const galleryCards = $$('.gallery-card');
 let filter = 'all', galleryLimit = 6, photoIndex = 0, lightboxTrigger;
 const matchingCards = () => galleryCards.filter(card => filter === 'all' || card.dataset.category === filter);
-function filterGallery() {
+function filterGallery(animate = false) {
   const matches = matchingCards();
   galleryCards.forEach(card => { const index = matches.indexOf(card); card.hidden = index < 0 || index >= galleryLimit; });
   $('#gallery-status').textContent = `${Math.min(galleryLimit, matches.length)} / ${matches.length} zdjęć`;
   $('#gallery-more').hidden = matches.length <= galleryLimit;
+  if (animate) matches.slice(0, galleryLimit).forEach((card, index) => {
+    const box = card.getBoundingClientRect();
+    if (box.top < innerHeight && box.bottom > 0) enterMotion(card, (index % 3) * 55, 10);
+  });
 }
 $$('[data-filter]').forEach(button => button.addEventListener('click', () => {
   filter = button.dataset.filter; galleryLimit = 6;
   $$('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-  filterGallery();
+  filterGallery(true);
 }));
 $('#gallery-more').addEventListener('click', () => {
   const matches = matchingCards(); const firstNew = matches[galleryLimit];
-  galleryLimit += 6; filterGallery();
+  galleryLimit += 6; filterGallery(true);
   if (firstNew) firstNew.querySelector('a').focus({ preventScroll: true });
 });
 filterGallery();
@@ -67,6 +93,7 @@ function loadPhoto(url) {
 lightboxImage.addEventListener('load', () => {
   lightboxImage.hidden = false;
   $('#lightbox-feedback').hidden = true;
+  playMotion(lightboxImage, [{ opacity: .35 }, { opacity: 1 }], { duration: 300 });
 });
 lightboxImage.addEventListener('error', () => {
   lightboxImage.hidden = true;
@@ -117,6 +144,7 @@ function setStep(next, focus = true) {
   if (focus) {
     form.scrollIntoView({ block: 'start', behavior: 'instant' });
     const legend = steps[next].querySelector('legend'); legend.tabIndex = -1; legend.focus({ preventScroll: true });
+    enterMotion(steps[next], 0, 8);
   }
 }
 function generateSummary() {
@@ -236,3 +264,20 @@ if ('IntersectionObserver' in window) {
 }
 // Reveal script-dependent controls only after the application has initialized.
 document.documentElement.classList.remove('no-js');
+
+// Progressive enhancement: content is visible even if motion is unavailable or cancelled.
+if (!motionPreference.matches) {
+  $$('.hero-content > *').forEach((element, index) => enterMotion(element, index * 65, 16));
+  playMotion($('.hero-photos'), [{ opacity: .8, transform: 'translateY(12px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 800 });
+  if ('IntersectionObserver' in window) {
+    revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        revealObserver.unobserve(entry.target);
+        const delay = entry.target.classList.contains('gallery-card') ? (galleryCards.indexOf(entry.target) % 3) * 60 : 0;
+        enterMotion(entry.target, delay, 18);
+      });
+    }, { rootMargin: '0px 0px -24px 0px', threshold: .06 });
+    $$('.section-heading, .service-tabs, .service-view, .gallery-card, .reference-card, .equipment-image, .equipment-copy, .contact-info, .planner, .faq > h2, .faq-list, .footer-main').forEach(element => revealObserver.observe(element));
+  }
+}

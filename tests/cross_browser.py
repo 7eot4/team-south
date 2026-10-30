@@ -25,8 +25,10 @@ with sync_playwright() as p:
             if width<=800:
                 menu=page.locator('.menu').bounding_box()
                 page.locator('.menu').click();expect(page.locator('.menu')).to_have_attribute('aria-expanded','true')
+                page.locator('#navigation').evaluate('(e)=>Promise.all(e.getAnimations().map(a=>a.finished.catch(()=>{})))')
                 nav=page.locator('#navigation').bounding_box()
                 assert abs(nav['x'])<=1 and abs(nav['y']-header['height'])<=1,(name,width,nav,header)
+                assert nav['y']+nav['height']<=height+1,(name,width,height,nav)
                 for icon in page.locator('.header-socials .social-button').all():
                     box=icon.bounding_box();assert box['x']>=0 and box['x']+box['width']<=width,(name,width,box)
                 assert page.locator('.header-socials').bounding_box()['x']<=page.locator('#navigation>a').first.bounding_box()['x']
