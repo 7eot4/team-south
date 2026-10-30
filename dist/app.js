@@ -267,8 +267,6 @@ document.documentElement.classList.remove('no-js');
 
 // Progressive enhancement: content is visible even if motion is unavailable or cancelled.
 if (!motionPreference.matches) {
-  $$('.hero-content > *').forEach((element, index) => enterMotion(element, index * 65, 16));
-  playMotion($('.hero-photos'), [{ opacity: .8, transform: 'translateY(12px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 800 });
   if ('IntersectionObserver' in window) {
     revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {

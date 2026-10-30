@@ -22,8 +22,8 @@ with sync_playwright() as p:
         errors = []
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.goto(base, wait_until='domcontentloaded')
-        until(page, 'activeMotions.size > 0')
-        until(page, 'activeMotions.size === 0')
+        until(page, "[...document.querySelectorAll('.hero-content > *, .hero-photos')].some(e=>e.getAnimations().length>0)")
+        until(page, "[...document.querySelectorAll('.hero-content > *, .hero-photos')].every(e=>e.getAnimations().length===0)")
         assert page.locator('h1').evaluate('(e)=>getComputedStyle(e).opacity') == '1'
         page.locator('.gallery-link').first.hover()
         until(page, "Number(getComputedStyle(document.querySelector('.gallery-link img')).transform.split('(')[1]?.split(',')[0]) > 1")
