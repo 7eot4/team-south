@@ -230,7 +230,11 @@ const estimateCatalogue = {
   minikoparka: { label: 'Minikoparka 3,5 t z operatorem', unit: 'h', inquiry: 'ziemne', low: 120, high: 120, foundation: false, scope: 'Referencyjna stawka godzinowa minikoparki 3,5 t z operatorem. Czas pracy podajesz samodzielnie.', exclusions: 'Poza kalkulacją: transport maszyny, materiały, wywóz, utylizacja i VAT. Dobór sprzętu oraz minimalny czas rozliczenia ustala firma.' }
 };
 const estimateFoundationRate = { low: 30, high: 50 };
-const estimateMoney = value => new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(value / 100);
+let estimateMoneyFormatter;
+const estimateMoney = value => {
+  estimateMoneyFormatter ??= new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  return estimateMoneyFormatter.format(value / 100);
+};
 const estimateRange = range => range.low === range.high ? estimateMoney(range.low) : `${estimateMoney(range.low)} – ${estimateMoney(range.high)}`;
 const estimateNumber = (input, max, digits = 3, optional = false) => {
   const text = input.value.trim();
@@ -275,7 +279,6 @@ function calculateEstimate() {
   $('#estimate-exclusions').textContent = exclusions;
   $('#estimate-quantity-label').textContent = model.unit === 'h' ? 'Czas pracy (godziny)' : model.unit === 'm³' ? 'Objętość (m³)' : 'Powierzchnia (m²)';
   const modelRange = { low: Math.round(model.low * 100), high: Math.round(model.high * 100) };
-  $('#estimate-rate').textContent = `${estimateRange(modelRange)} / ${model.unit}`;
   let quantity;
   if (dimensions) {
     const length = estimateNumber($('#estimate-length'), 1000);
@@ -290,7 +293,7 @@ function calculateEstimate() {
   $('#estimate-use').disabled = !valid;
   $('#estimate-foundation-row').hidden = !model.foundation || !$('#estimate-foundation').checked;
   if (!valid) {
-    ['#estimate-total', '#estimate-used-quantity', '#estimate-base', '#estimate-foundation-cost', '#estimate-extra-cost', '#estimate-reserve-cost'].forEach(selector => { $(selector).textContent = '—'; });
+    ['#estimate-total', '#estimate-used-quantity', '#estimate-rate', '#estimate-base', '#estimate-foundation-cost', '#estimate-extra-cost', '#estimate-reserve-cost'].forEach(selector => { $(selector).textContent = '—'; });
     const hasValues = $$('#kalkulator input:not([type=checkbox])').some(input => input.value.trim());
     $('#estimate-validation').textContent = hasValues ? 'Sprawdź liczby. Ilość musi być dodatnia (do 1 000 000 jednostek lub 1000 h); koszty dodatkowe do 1 000 000 zł, z dokładnością do grosza.' : 'Podaj ilość lub wymiary, aby zobaczyć wynik. Możesz użyć przecinka lub kropki.';
     return;
@@ -306,6 +309,7 @@ function calculateEstimate() {
   const reserveCost = { low: Math.round(subtotal.low * reserve / 100), high: Math.round(subtotal.high * reserve / 100) };
   const total = { low: subtotal.low + reserveCost.low, high: subtotal.high + reserveCost.high };
   const quantityText = `${plNumber(Number(quantity.toFixed(6)))} ${model.unit}`;
+  $('#estimate-rate').textContent = `${estimateRange(modelRange)} / ${model.unit}`;
   $('#estimate-total').textContent = estimateRange(total);
   $('#estimate-used-quantity').textContent = quantityText;
   $('#estimate-base').textContent = estimateRange(base);
