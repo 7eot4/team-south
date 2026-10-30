@@ -29,7 +29,7 @@ with sync_playwright() as p:
                 assert abs(nav['x'])<=1 and abs(nav['y']-header['height'])<=1,(name,width,nav,header)
                 for icon in page.locator('.header-socials .social-button').all():
                     box=icon.bounding_box();assert box['x']>=0 and box['x']+box['width']<=width,(name,width,box)
-                assert page.locator('.header-socials').bounding_box()['x']>page.locator('#navigation>a').first.bounding_box()['x']
+                assert page.locator('.header-socials').bounding_box()['x']<=page.locator('#navigation>a').first.bounding_box()['x']
                 page.keyboard.press('Escape');expect(page.locator('.menu')).to_have_attribute('aria-expanded','false')
         page.set_viewport_size({'width':390,'height':844})
         page.locator('[data-service="bruk"]').click();expect(page.locator('#service-title')).to_have_text('Podjazdy, chodniki i nawierzchnie')

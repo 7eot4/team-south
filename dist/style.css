@@ -23,7 +23,7 @@ dialog{border:0;max-height:94dvh;box-shadow:0 20px 100px #0005;background:white}
 /* WebKit native disclosure hit-testing regresses with deferred sections; retain full rendering there. */
 @supports (content-visibility:auto) and (not (-webkit-nbsp-mode:space)){main>section:not(.hero){content-visibility:auto;contain-intrinsic-block-size:auto 800px}}
 
-/* Navigation links start on the left; social actions finish on the right. */
-#navigation .header-socials{margin-left:auto;flex-shrink:0}
+/* Social actions start on the left; navigation links finish on the right. */
+#navigation .header-socials{margin-right:auto;flex-shrink:0}
 @media(min-width:801px) and (max-width:1150px){#navigation{gap:12px;font-size:13px}#navigation .nav-contact{padding:10px 12px;margin-left:0}#navigation .social-button{width:28px}#navigation .header-socials{gap:1px}}
-@media(max-width:800px){#navigation .header-socials{align-self:flex-end;margin-top:14px}#navigation .social-button{width:40px;height:40px}#navigation .social-button img{width:20px;height:20px}}
+@media(max-width:800px){#navigation>a{text-align:right}#navigation .header-socials{align-self:flex-start;margin-bottom:14px}#navigation .social-button{width:40px;height:40px}#navigation .social-button img{width:20px;height:20px}}
