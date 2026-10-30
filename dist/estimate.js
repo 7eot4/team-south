@@ -1,6 +1,7 @@
 'use strict';
 // The calculator stays unavailable if the core application failed integrity checks.
-if (!document.documentElement.classList.contains('no-js')) {
+function initializeEstimate() {
+if (document.documentElement.classList.contains('no-js')) return;
 // Reference prices, not TEAM SOUTH's price list. Keep rates and scope in this one catalogue.
 // Sources and assumptions: KALKULATOR-WYCENY.md, checked 2026-10-30.
 const estimateCatalogue = {
@@ -141,3 +142,5 @@ $('.choose-service').addEventListener('click', e => {
 
 $('#kalkulator').classList.remove('estimate-pending');
 }
+// Let the initial page paint before introducing calculator controls and their layout.
+requestAnimationFrame(() => requestAnimationFrame(initializeEstimate));
